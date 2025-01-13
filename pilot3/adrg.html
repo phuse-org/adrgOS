@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analysis Data Reviewer’s Guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="adrg_files/libs/clipboard/clipboard.min.js"></script>
+<script src="adrg_files/libs/quarto-html/quarto.js"></script>
+<script src="adrg_files/libs/quarto-html/popper.min.js"></script>
+<script src="adrg_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="adrg_files/libs/quarto-html/anchor.min.js"></script>
+<link href="adrg_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="adrg_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="adrg_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="adrg_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="adrg_files/libs/bootstrap/bootstrap-0f292c1420fa79288222093d38930422.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">1.1</span> Purpose</a></li>
+  <li><a href="#study-data-standards-and-dictionary-inventory" id="toc-study-data-standards-and-dictionary-inventory" class="nav-link" data-scroll-target="#study-data-standards-and-dictionary-inventory"><span class="header-section-number">1.2</span> Study Data Standards and Dictionary Inventory</a></li>
+  <li><a href="#source-data-used-for-analysis-dataset-creation" id="toc-source-data-used-for-analysis-dataset-creation" class="nav-link" data-scroll-target="#source-data-used-for-analysis-dataset-creation"><span class="header-section-number">1.3</span> Source Data Used for Analysis Dataset Creation</a></li>
+  </ul></li>
+  <li><a href="#protocol-description" id="toc-protocol-description" class="nav-link" data-scroll-target="#protocol-description"><span class="header-section-number">2</span> Protocol Description</a>
+  <ul class="collapse">
+  <li><a href="#protocol-number-and-title" id="toc-protocol-number-and-title" class="nav-link" data-scroll-target="#protocol-number-and-title"><span class="header-section-number">2.1</span> Protocol Number and Title</a></li>
+  <li><a href="#protocol-design-in-relation-to-adam-concepts" id="toc-protocol-design-in-relation-to-adam-concepts" class="nav-link" data-scroll-target="#protocol-design-in-relation-to-adam-concepts"><span class="header-section-number">2.2</span> Protocol Design in Relation to ADaM Concepts</a>
+  <ul class="collapse">
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives"><span class="header-section-number">2.2.1</span> Objectives:</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology"><span class="header-section-number">2.2.2</span> Methodology:</a></li>
+  <li><a href="#number-of-subjects-planned" id="toc-number-of-subjects-planned" class="nav-link" data-scroll-target="#number-of-subjects-planned"><span class="header-section-number">2.2.3</span> Number of Subjects Planned:</a></li>
+  <li><a href="#study-schema" id="toc-study-schema" class="nav-link" data-scroll-target="#study-schema"><span class="header-section-number">2.2.4</span> Study schema:</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#analysis-considerations-related-to-multiple-analysis-datasets" id="toc-analysis-considerations-related-to-multiple-analysis-datasets" class="nav-link" data-scroll-target="#analysis-considerations-related-to-multiple-analysis-datasets"><span class="header-section-number">3</span> Analysis Considerations Related to Multiple Analysis Datasets</a>
+  <ul class="collapse">
+  <li><a href="#core-variables" id="toc-core-variables" class="nav-link" data-scroll-target="#core-variables"><span class="header-section-number">3.1</span> Core Variables</a></li>
+  <li><a href="#treatment-variables" id="toc-treatment-variables" class="nav-link" data-scroll-target="#treatment-variables"><span class="header-section-number">3.2</span> Treatment Variables</a></li>
+  <li><a href="#use-of-visit-windowing-unscheduled-visits-and-record-selection" id="toc-use-of-visit-windowing-unscheduled-visits-and-record-selection" class="nav-link" data-scroll-target="#use-of-visit-windowing-unscheduled-visits-and-record-selection"><span class="header-section-number">3.3</span> Use of Visit Windowing, Unscheduled Visits, and Record Selection</a></li>
+  <li><a href="#imputationderivation-methods" id="toc-imputationderivation-methods" class="nav-link" data-scroll-target="#imputationderivation-methods"><span class="header-section-number">3.4</span> Imputation/Derivation Methods</a></li>
+  </ul></li>
+  <li><a href="#analysis-data-creation-and-processing-issues" id="toc-analysis-data-creation-and-processing-issues" class="nav-link" data-scroll-target="#analysis-data-creation-and-processing-issues"><span class="header-section-number">4</span> Analysis Data Creation and Processing Issues</a>
+  <ul class="collapse">
+  <li><a href="#split-datasets" id="toc-split-datasets" class="nav-link" data-scroll-target="#split-datasets"><span class="header-section-number">4.1</span> Split Datasets</a></li>
+  <li><a href="#data-dependencies" id="toc-data-dependencies" class="nav-link" data-scroll-target="#data-dependencies"><span class="header-section-number">4.2</span> Data Dependencies</a></li>
+  <li><a href="#intermediate-datasets" id="toc-intermediate-datasets" class="nav-link" data-scroll-target="#intermediate-datasets"><span class="header-section-number">4.3</span> Intermediate Datasets</a></li>
+  </ul></li>
+  <li><a href="#analysis-dataset-descriptions" id="toc-analysis-dataset-descriptions" class="nav-link" data-scroll-target="#analysis-dataset-descriptions"><span class="header-section-number">5</span> Analysis Dataset Descriptions</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">5.1</span> Overview</a></li>
+  <li><a href="#analysis-datasets" id="toc-analysis-datasets" class="nav-link" data-scroll-target="#analysis-datasets"><span class="header-section-number">5.2</span> Analysis Datasets</a>
+  <ul class="collapse">
+  <li><a href="#adsl---subject-level-analysis-dataset" id="toc-adsl---subject-level-analysis-dataset" class="nav-link" data-scroll-target="#adsl---subject-level-analysis-dataset"><span class="header-section-number">5.2.1</span> ADSL - Subject-Level Analysis Dataset</a></li>
+  <li><a href="#adadas---adas-cog-analysis-dataset" id="toc-adadas---adas-cog-analysis-dataset" class="nav-link" data-scroll-target="#adadas---adas-cog-analysis-dataset"><span class="header-section-number">5.2.2</span> ADADAS - ADAS-COG Analysis Dataset</a></li>
+  <li><a href="#adae---adverse-events-analysis-dataset" id="toc-adae---adverse-events-analysis-dataset" class="nav-link" data-scroll-target="#adae---adverse-events-analysis-dataset"><span class="header-section-number">5.2.3</span> ADAE - Adverse Events Analysis Dataset</a></li>
+  <li><a href="#adlbc---analysis-dataset-lab-blood-chemistry" id="toc-adlbc---analysis-dataset-lab-blood-chemistry" class="nav-link" data-scroll-target="#adlbc---analysis-dataset-lab-blood-chemistry"><span class="header-section-number">5.2.4</span> ADLBC - Analysis Dataset Lab Blood Chemistry</a></li>
+  <li><a href="#adtte---ae-time-to-1st-derm.-event-analysis" id="toc-adtte---ae-time-to-1st-derm.-event-analysis" class="nav-link" data-scroll-target="#adtte---ae-time-to-1st-derm.-event-analysis"><span class="header-section-number">5.2.5</span> ADTTE - AE Time To 1st Derm. Event Analysis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#data-conformance-summary" id="toc-data-conformance-summary" class="nav-link" data-scroll-target="#data-conformance-summary"><span class="header-section-number">6</span> Data Conformance Summary</a>
+  <ul class="collapse">
+  <li><a href="#conformance-inputs" id="toc-conformance-inputs" class="nav-link" data-scroll-target="#conformance-inputs"><span class="header-section-number">6.1</span> Conformance Inputs</a></li>
+  <li><a href="#issues-summary" id="toc-issues-summary" class="nav-link" data-scroll-target="#issues-summary"><span class="header-section-number">6.2</span> Issues Summary</a></li>
+  <li><a href="#qc-findings-and-common-issues" id="toc-qc-findings-and-common-issues" class="nav-link" data-scroll-target="#qc-findings-and-common-issues"><span class="header-section-number">6.3</span> QC Findings and Common Issues</a></li>
+  </ul></li>
+  <li><a href="#submission-of-programs" id="toc-submission-of-programs" class="nav-link" data-scroll-target="#submission-of-programs"><span class="header-section-number">7</span> Submission of Programs</a>
+  <ul class="collapse">
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description"><span class="header-section-number">7.1</span> Description</a></li>
+  <li><a href="#adam-programs" id="toc-adam-programs" class="nav-link" data-scroll-target="#adam-programs"><span class="header-section-number">7.2</span> ADaM Programs</a></li>
+  <li><a href="#analysis-output-programs" id="toc-analysis-output-programs" class="nav-link" data-scroll-target="#analysis-output-programs"><span class="header-section-number">7.3</span> Analysis Output Programs</a></li>
+  <li><a href="#proprietary-r-packages" id="toc-proprietary-r-packages" class="nav-link" data-scroll-target="#proprietary-r-packages"><span class="header-section-number">7.4</span> Proprietary R Packages</a></li>
+  <li><a href="#open-source-r-analysis-packages" id="toc-open-source-r-analysis-packages" class="nav-link" data-scroll-target="#open-source-r-analysis-packages"><span class="header-section-number">7.5</span> Open-source R Analysis Packages</a></li>
+  </ul></li>
+  <li><a href="#directory-structure" id="toc-directory-structure" class="nav-link" data-scroll-target="#directory-structure"><span class="header-section-number">8</span> Directory Structure</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">9</span> Appendix</a>
+  <ul class="collapse">
+  <li><a href="#appendix-1-pilot-3-installation-and-usage" id="toc-appendix-1-pilot-3-installation-and-usage" class="nav-link" data-scroll-target="#appendix-1-pilot-3-installation-and-usage"><span class="header-section-number">9.1</span> Appendix 1 : Pilot 3 Installation and Usage</a>
+  <ul class="collapse">
+  <li><a href="#installation-of-r-and-r-studio" id="toc-installation-of-r-and-r-studio" class="nav-link" data-scroll-target="#installation-of-r-and-r-studio"><span class="header-section-number">9.1.1</span> Installation of R and R Studio</a></li>
+  <li><a href="#create-a-new-r-studio-project-within-the-pilot3-files-directory" id="toc-create-a-new-r-studio-project-within-the-pilot3-files-directory" class="nav-link" data-scroll-target="#create-a-new-r-studio-project-within-the-pilot3-files-directory"><span class="header-section-number">9.1.2</span> Create a new R Studio project within the pilot3-files directory</a></li>
+  <li><a href="#installation-of-r-packages" id="toc-installation-of-r-packages" class="nav-link" data-scroll-target="#installation-of-r-packages"><span class="header-section-number">9.1.3</span> Installation of R Packages</a></li>
+  </ul></li>
+  <li><a href="#appendix-2-qc-findings" id="toc-appendix-2-qc-findings" class="nav-link" data-scroll-target="#appendix-2-qc-findings"><span class="header-section-number">9.2</span> Appendix 2 : QC Findings</a>
+  <ul class="collapse">
+  <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl"><span class="header-section-number">9.2.1</span> ADSL</a></li>
+  <li><a href="#adae" id="toc-adae" class="nav-link" data-scroll-target="#adae"><span class="header-section-number">9.2.2</span> ADAE</a></li>
+  <li><a href="#adlbc" id="toc-adlbc" class="nav-link" data-scroll-target="#adlbc"><span class="header-section-number">9.2.3</span> ADLBC</a></li>
+  <li><a href="#adadas" id="toc-adadas" class="nav-link" data-scroll-target="#adadas"><span class="header-section-number">9.2.4</span> ADADAS</a></li>
+  <li><a href="#adtte" id="toc-adtte" class="nav-link" data-scroll-target="#adtte"><span class="header-section-number">9.2.5</span> ADTTE</a></li>
+  <li><a href="#label-discrepancies" id="toc-label-discrepancies" class="nav-link" data-scroll-target="#label-discrepancies"><span class="header-section-number">9.2.6</span> Label discrepancies</a></li>
+  </ul></li>
+  <li><a href="#appendix-3-common-issues" id="toc-appendix-3-common-issues" class="nav-link" data-scroll-target="#appendix-3-common-issues"><span class="header-section-number">9.3</span> Appendix 3 : Common Issues</a>
+  <ul class="collapse">
+  <li><a href="#package-issue-tracking" id="toc-package-issue-tracking" class="nav-link" data-scroll-target="#package-issue-tracking"><span class="header-section-number">9.3.1</span> Package issue tracking</a></li>
+  <li><a href="#knowledge-sharing" id="toc-knowledge-sharing" class="nav-link" data-scroll-target="#knowledge-sharing"><span class="header-section-number">9.3.2</span> Knowledge sharing</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysis Data Reviewer’s Guide</h1>
+<p class="subtitle lead">R Consortium<br>
+R Submission Pilot 3<br>
+ADRG Template Version 2019-07-18</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="page-break-after: always;"></div>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<section id="purpose" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1.1</span> Purpose</h2>
+<p>This document provides context for the analysis datasets and terminology that benefit from additional explanation beyond the Data Definition document (define.xml). In addition, this document provides a summary of ADaM conformance findings.</p>
+</section>
+<section id="study-data-standards-and-dictionary-inventory" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="study-data-standards-and-dictionary-inventory"><span class="header-section-number">1.2</span> Study Data Standards and Dictionary Inventory</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Standard or Dictionary</strong></th>
+<th><strong>Versions Used</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SDTM</td>
+<td>SDTM Implementation Guide Version 3.1.2</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>SDTM Version 1.2</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>SDTM Controlled Terminology</td>
+<td>CDISC SDTM Controlled Terminology, 2022-12-16</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADaM</td>
+<td>ADaM-IG v1.1</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ADaM v2.1</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>ADaM Controlled Terminology</td>
+<td>CDISC ADaM Controlled Terminology, 2022-06-24</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Data Definitions</td>
+<td>Define-XML v2.0</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Medical Events Dictionary</td>
+<td>MedDRA version 8.0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="source-data-used-for-analysis-dataset-creation" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="source-data-used-for-analysis-dataset-creation"><span class="header-section-number">1.3</span> Source Data Used for Analysis Dataset Creation</h2>
+<p>The ADaM datasets were derived from SDTM version 1.2. For traceability, the SDTM is publicly available at the <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/tabulations/sdtm">PHUSE Github Repository</a>.</p>
+<p>Which can be traced back to the original <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project">CDISC SDTM &amp; ADaM Pilot Project</a>.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="protocol-description" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Protocol Description</h1>
+<section id="protocol-number-and-title" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="protocol-number-and-title"><span class="header-section-number">2.1</span> Protocol Number and Title</h2>
+<ul>
+<li><strong>Protocol Number:</strong> CDISCPilot1</li>
+<li><strong>Protocol Title:</strong> Safety and Efficacy of the Xanomeline Transdermal Therapeutic System (TTS) in Patients with Mild to Moderate Alzheimer’s Disease</li>
+</ul>
+<p>The reference documents can be found <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/blob/master/updated-pilot-submission-package/900172/m5/53-clin-stud-rep/535-rep-effic-safety-stud/5351-stud-rep-contr/cdiscpilot01/cdiscpilot01.pdf">here</a>.</p>
+</section>
+<section id="protocol-design-in-relation-to-adam-concepts" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="protocol-design-in-relation-to-adam-concepts"><span class="header-section-number">2.2</span> Protocol Design in Relation to ADaM Concepts</h2>
+<section id="objectives" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="objectives"><span class="header-section-number">2.2.1</span> Objectives:</h3>
+<p>The objectives of the study were to evaluate the efficacy and safety of transdermal xanomeline, 50cm<sup>2</sup> and 75cm<sup>2</sup>, and placebo in subjects with mild to moderate Alzheimer’s disease.</p>
+</section>
+<section id="methodology" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="methodology"><span class="header-section-number">2.2.2</span> Methodology:</h3>
+<p>This was a prospective, randomized, multi-center, double-blind, placebo-controlled, parallel-group study. Subjects were randomized equally to placebo, xanomeline low dose, or xanomeline high dose. Subjects applied 2 patches daily and were followed for a total of 26 weeks.</p>
+</section>
+<section id="number-of-subjects-planned" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="number-of-subjects-planned"><span class="header-section-number">2.2.3</span> Number of Subjects Planned:</h3>
+<p>300 subjects total (100 subjects in each of 3 groups)</p>
+</section>
+<section id="study-schema" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="study-schema"><span class="header-section-number">2.2.4</span> Study schema:</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cdiscpilot01-study-schema.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+</section>
+<section id="analysis-considerations-related-to-multiple-analysis-datasets" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Analysis Considerations Related to Multiple Analysis Datasets</h1>
+<section id="core-variables" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="core-variables"><span class="header-section-number">3.1</span> Core Variables</h2>
+<p>Core variables are those that are represented across all/most analysis datasets.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><strong>Variable Name</strong></th>
+<th><strong>Variable Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STUDYID</td>
+<td>Study Identifier</td>
+</tr>
+<tr class="even">
+<td>USUBJID</td>
+<td>Unique Subject Identifier</td>
+</tr>
+<tr class="odd">
+<td>SUBJID</td>
+<td>Subject Identifier for the Study</td>
+</tr>
+<tr class="even">
+<td>SITEID</td>
+<td>Study Site Identifier</td>
+</tr>
+<tr class="odd">
+<td>SITEGR1</td>
+<td>Pooled Site Group 1</td>
+</tr>
+<tr class="even">
+<td>TRTSDT</td>
+<td>Date of First Exposure to Treatment</td>
+</tr>
+<tr class="odd">
+<td>TRTEDT</td>
+<td>Date of Last Exposure to Treatment</td>
+</tr>
+<tr class="even">
+<td>AGE</td>
+<td>Age</td>
+</tr>
+<tr class="odd">
+<td>AGEGR1</td>
+<td>Pooled Age Group 1</td>
+</tr>
+<tr class="even">
+<td>AGEGR1N</td>
+<td>Pooled Age Group 1 (N)</td>
+</tr>
+<tr class="odd">
+<td>RACE</td>
+<td>Race</td>
+</tr>
+<tr class="even">
+<td>RACEN</td>
+<td>Race (N)</td>
+</tr>
+<tr class="odd">
+<td>SEX</td>
+<td>Sex</td>
+</tr>
+<tr class="even">
+<td>SAFFL</td>
+<td>Safety Population Flag</td>
+</tr>
+<tr class="odd">
+<td>ITTFL</td>
+<td>Intent-To-Treat Population Flag</td>
+</tr>
+<tr class="even">
+<td>EFFFL</td>
+<td>Efficacy Population Flag</td>
+</tr>
+<tr class="odd">
+<td>COMP24FL</td>
+<td>Completers of Week 24 Population Flag</td>
+</tr>
+<tr class="even">
+<td>DSRAEFL</td>
+<td>Discontinued due to AE?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="treatment-variables" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="treatment-variables"><span class="header-section-number">3.2</span> Treatment Variables</h2>
+<p>ARM versus TRT01P</p>
+<pre><code>  Are the values of ARM equivalent in meaning to values of TRT01P?
+
+    Yes.</code></pre>
+<p>ACTARM versus TRT01A</p>
+<pre><code>  If TRT01A is used, then are the values of ACTARM equivalent to values of TRT01A?
+
+    Not applicable - ACTARM is not used.</code></pre>
+<p>Use of ADaM Treatment Variables in Analysis</p>
+<pre><code>  Are both planned and actual treatment variables used in analysis?
+
+    Yes. Planned treatment variables are used for study population and efficacy 
+    analyses, whilst actual treatment variables are used for the safety analysis.
+    All subjects received the treatment arm to which they were randomised and so
+    the planned treatment is equivalent to the actual treatment for all subjects.</code></pre>
+<p>Use of ADaM Treatment Grouping Variables in Analysis</p>
+<pre><code>  Are both planned and actual treatment grouping variables used in analysis?
+
+    Not applicable - treatment grouping variables are not used.</code></pre>
+</section>
+<section id="use-of-visit-windowing-unscheduled-visits-and-record-selection" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="use-of-visit-windowing-unscheduled-visits-and-record-selection"><span class="header-section-number">3.3</span> Use of Visit Windowing, Unscheduled Visits, and Record Selection</h2>
+<p>Was windowing used in one or more analysis datasets?</p>
+<pre><code>  Yes</code></pre>
+<p>Were unscheduled visits used in any analyses?</p>
+<pre><code>  Yes</code></pre>
+</section>
+<section id="imputationderivation-methods" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="imputationderivation-methods"><span class="header-section-number">3.4</span> Imputation/Derivation Methods</h2>
+<p>For ASTDT in ADAE, this date was converted to numeric SAS date from AE.AESTDTC. If the day component is missing, a value of ‘01’ is used. If both the month and day are missing no imputation is performed. See define.xml.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="analysis-data-creation-and-processing-issues" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Analysis Data Creation and Processing Issues</h1>
+<section id="split-datasets" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="split-datasets"><span class="header-section-number">4.1</span> Split Datasets</h2>
+<p>There were no datasets that required splitting due to size constraints.</p>
+</section>
+<section id="data-dependencies" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="data-dependencies"><span class="header-section-number">4.2</span> Data Dependencies</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><strong>Analysis Dataset</strong></th>
+<th><strong>Dependent on Following Analysis Datasets</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADAE</td>
+<td>ADSL</td>
+</tr>
+<tr class="even">
+<td>ADTTE</td>
+<td>ADSL, ADAE</td>
+</tr>
+<tr class="odd">
+<td>ADADAS</td>
+<td>ADSL</td>
+</tr>
+<tr class="even">
+<td>ADLBC</td>
+<td>ADSL</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="intermediate-datasets" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="intermediate-datasets"><span class="header-section-number">4.3</span> Intermediate Datasets</h2>
+<p>No intermediate datasets were created for this trial.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="analysis-dataset-descriptions" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Analysis Dataset Descriptions</h1>
+<section id="overview" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">5.1</span> Overview</h2>
+<p>The following provides detailed information for each analysis dataset included in the Pilot 3 submission, which were used to generate the outputs in Pilot 1. These ADaM datasets are ADSL, ADAE, ADTTE, ADADAS, ADLBC.</p>
+</section>
+<section id="analysis-datasets" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="analysis-datasets"><span class="header-section-number">5.2</span> Analysis Datasets</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Dataset -</p>
+<p>Dataset Label</p></th>
+<th>Class</th>
+<th>Efficacy</th>
+<th>Safety</th>
+<th><p>Baseline or other</p>
+<p>subject characteristics</p></th>
+<th><p>Primary</p>
+<p>Objective</p></th>
+<th>Structure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADSL - Subject-Level Analysis Dataset</td>
+<td>SUBJECT LEVEL ANALYSIS DATASET</td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+<td>One record per subject</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADADAS - ADAS-COG Analysis Dataset</td>
+<td>BASIC DATA STRUCTURE</td>
+<td>x</td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>One or more records per subject per analysis parameter per analysis timepoint</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADAE - Adverse Events Analysis Dataset</td>
+<td>OCCURRENCE DATA STRUCTURE</td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td>One record per subject per adverse event</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADLBC - Analysis Dataset Lab Blood Chemistry</td>
+<td>BASIC DATA STRUCTURE</td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td>One or more records per subject per analysis parameter per analysis timepoint</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ADTTE - AE Time To 1st Derm. Event Analysis</td>
+<td>BASIC DATA STRUCTURE</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+<td></td>
+<td>One or more records per subject per analysis parameter per analysis timepoint</td>
+</tr>
+</tbody>
+</table>
+<section id="adsl---subject-level-analysis-dataset" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="adsl---subject-level-analysis-dataset"><span class="header-section-number">5.2.1</span> ADSL - Subject-Level Analysis Dataset</h3>
+<p>The subject level analysis dataset (ADSL) contains required variables for demographics, treatment groups, and population flags. In addition, it contains other baseline characteristics that were used in both safety and efficacy analyses. All patients in DM were included in ADSL. The following are the key population flags are used in analyses for patients:</p>
+<ul>
+<li><p>SAFFL – Safety Population Flag (all patients having received any study treatment)</p></li>
+<li><p>ITTFL – Intent-to-Treat Population Flag (all randomized patients)</p></li>
+</ul>
+</section>
+<section id="adadas---adas-cog-analysis-dataset" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="adadas---adas-cog-analysis-dataset"><span class="header-section-number">5.2.2</span> ADADAS - ADAS-COG Analysis Dataset</h3>
+<p>ADADAS contains analysis data from the ADAS-Cog questionnaire, one of the primary efficacy endpoints. It contains one record per subject per parameter (ADAS-Cog questionnaire item) per VISIT. Visits are placed into analysis visits (represented by AVISIT and AVISITN) based on the date of the visit and the visit windows.</p>
+</section>
+<section id="adae---adverse-events-analysis-dataset" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="adae---adverse-events-analysis-dataset"><span class="header-section-number">5.2.3</span> ADAE - Adverse Events Analysis Dataset</h3>
+<p>ADAE contains one record per reported event per subject. Subjects who did not report any Adverse Events are not represented in this dataset. The data reference for ADAE is the SDTM AE (Adverse Events) domain and there is a 1-1 correspondence between records in the source and this analysis dataset. These records can be linked uniquely by STUDYID, USUBJID, and AESEQ. Events of particular interest (dermatologic) are captured in the customized query variable (CQ01NAM) in this dataset. Since ADAE is a source for ADTTE, the first chronological occurrence based on the start dates (and sequence numbers) of the treatment emergent dermatological events are flagged (AOCC01FL) to facilitate traceability between these two analysis datasets.</p>
+</section>
+<section id="adlbc---analysis-dataset-lab-blood-chemistry" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="adlbc---analysis-dataset-lab-blood-chemistry"><span class="header-section-number">5.2.4</span> ADLBC - Analysis Dataset Lab Blood Chemistry</h3>
+<p>ADLBC contains one record per lab analysis parameter, per time point, per subject. ADLBC contains lab chemistry parameters and these data are derived from the SDTM LB (Laboratory Tests) domain. Two sets of lab parameters exist in ADLBC. One set contains the standardised lab value from the LB domain and the second set contains change from previous visit relative to normal range values. In some of the summaries the derived end-of-treatment visit (AVISITN=99) is also presented.</p>
+</section>
+<section id="adtte---ae-time-to-1st-derm.-event-analysis" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="adtte---ae-time-to-1st-derm.-event-analysis"><span class="header-section-number">5.2.5</span> ADTTE - AE Time To 1st Derm. Event Analysis</h3>
+<p>ADTTE contains one observation per parameter per subject. ADTTE is specifically for safety analyses of the time to the first dermatologic adverse event. Dermatologic AEs are considered an adverse event of special interest. The key parameter used for the analysis of time to the first dermatological event is with PARAMCD of “TTDE”.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+</section>
+<section id="data-conformance-summary" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Data Conformance Summary</h1>
+<section id="conformance-inputs" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="conformance-inputs"><span class="header-section-number">6.1</span> Conformance Inputs</h2>
+<p>Were the analysis datasets evaluated for conformance with CDISC ADaM Validation Checks?</p>
+<pre><code>  Yes, Version of CDISC ADaM Validation Checks and software used: Pinnacle 21® 
+  Community 4.0.2</code></pre>
+<p>Were the ADaM datasets evaluated in relation to define.xml?</p>
+<pre><code>  Yes</code></pre>
+<p>Was define.xml evaluated?</p>
+<pre><code>  Yes                     </code></pre>
+</section>
+<section id="issues-summary" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="issues-summary"><span class="header-section-number">6.2</span> Issues Summary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 22%">
+<col style="width: 15%">
+<col style="width: 22%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check ID</th>
+<th>Diagnostic Message</th>
+<th>Dataset</th>
+<th>Count (Issue Rate)</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AD1012</td>
+<td>Secondary custom variable is present but its primary variable is not present</td>
+<td>ADSL</td>
+<td>1 (50.00%)</td>
+<td>This is a Sponsor Extension to the ADaM Model. The VISNUMEN [End of Trt Visit (Vis 12 or Early Term.)] variable is a integer variable which is not related to any character variable.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="qc-findings-and-common-issues" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="qc-findings-and-common-issues"><span class="header-section-number">6.3</span> QC Findings and Common Issues</h2>
+<p>In this Pilot 3 study, our focus was to create a subset of ADaMs based on the CDSICPILOT data, using R. We compared our R generated ADaMs against the CDISCPILOT ADaMs, created in SAS, as a QC step. With these comparisons we listed the QC Findings with explanations as to why these findings exist. We also came across common issues throughout the ADaM generation process, which could be helpful for improvements utilising the CDISC Pilot data in the future. More details can be found in the appendix (Appendix 2 and Appendix 3).</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="submission-of-programs" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Submission of Programs</h1>
+<section id="description" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="description"><span class="header-section-number">7.1</span> Description</h2>
+<p>The sponsor has provided all programs for analysis results. They are all created on a Linux platform using R version 4.2.3.</p>
+</section>
+<section id="adam-programs" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="adam-programs"><span class="header-section-number">7.2</span> ADaM Programs</h2>
+<p>The following table contains the list of programs that generate the analysis datasets in Pilot 3. It shows the program file name, the analysis dataset name and the label of the analysis dataset. The recommended steps to execute the analysis results using R are described in the Appendix.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 32%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Program Name</strong></th>
+<th><strong>Analysis Dataset Name</strong></th>
+<th><strong>Analysis Dataset Label</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>adsl.r</td>
+<td>adsl.xpt</td>
+<td>Subject-Level Analysis Dataset</td>
+</tr>
+<tr class="even">
+<td>adadas.r</td>
+<td>adas.xpt</td>
+<td>ADAS-Cog Analysis</td>
+</tr>
+<tr class="odd">
+<td>adlbc.r</td>
+<td>adlb.xpt</td>
+<td>Analysis Dataset Lab Blood Chemistry</td>
+</tr>
+<tr class="even">
+<td>adae.r</td>
+<td>adae.xpt</td>
+<td>Adverse Events Analysis Dataset</td>
+</tr>
+<tr class="odd">
+<td>adtte.r</td>
+<td>adtte.xpt</td>
+<td>AE Time to 1st Derm. Event Analysis</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analysis-output-programs" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="analysis-output-programs"><span class="header-section-number">7.3</span> Analysis Output Programs</h2>
+<p>The following table contains a list of programs that generate outputs used in the R consortium R submission Pilot 1. These outputs were rerun in Pilot 3 using the analysis datasets generated by the ADaM programs. It shows the program file names, the related outputs, the input datasets and variables used, and any data selection criteria that need to be applied per Pilot 1.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><p><strong>Program</strong></p>
+<p><strong>Name</strong></p></th>
+<th><p><strong>Output</strong></p>
+<p><strong>Name</strong></p></th>
+<th><strong>Analysis Datasets &amp; Variables</strong></th>
+<th><strong>Selection Criteria</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tlf-demographic.r</td>
+<td>tlf-demographic-pilot3.out</td>
+<td>ADSL.STUDYID ADSL.TRT01P ADSL.ITTFL ADSL.AGE ADSL.AGEGR1 ADSL.RACE ADSL.HEIGHTBL ADSL.WEIGHTBL ADSL.BMIBL ADSL.MMSETOT</td>
+<td><p>STUDYID== “CDISCPILOT01”</p>
+<p>Population: ADSL.ITTFL == “Y”</p>
+<p>Treatment Groups: ADSL.TRT01P Placebo Xanomeline Low Dose Xanomeline High Dose</p></td>
+</tr>
+<tr class="even">
+<td>tlf-primary.r</td>
+<td>tlf-primary-pilot3.rtf</td>
+<td><p>ADSL.TRT01P ADSL.USUBJID ADSL.EFFFL ADSL.ITTFL ADADAS.TRTP</p>
+<p>ADADAS.TRTPCD ADADAS.EFFFL ADADAS.ITTFL ADADAS.PARAMCD ADADAS.ANL01FL ADADAS.AVISIT ADADAS.AVISITN ADADAS.AVAL ADADAS.CHG</p></td>
+<td><p>STUDYID== “CDISCPILOT01”</p>
+<p>Population: ADADAS.EFFFL == “Y” ADADAS.ITTFL == “Y” ADADAS.ANL01FL == “Y”</p>
+<p><br>
+</p>
+<p>Treatment Groups: ADSL.TRTP Placebo Xanomeline Low Dose Xanomeline High Dose</p>
+<p>Parameters: ADADAS.PARAMCD == “ACTOT</p></td>
+</tr>
+<tr class="odd">
+<td><p><br>
+</p>
+<p>tlf-efficacy.r</p></td>
+<td>tlf-efficacy-pilot3.rtf</td>
+<td>ADSL.STUDYID ADSL.USUBJID ADSL.ITTFL ADLBC.TRTP ADLBC.TRTPN ADLBC.PARAMCD ADLBC.AVISITN ADLBC.BASE ADLBC.AVAL ADLBC.CHG</td>
+<td><p>STUDYID== “CDISCPILOT01”</p>
+<p>Population: ADSL.ITTFL == “Y” &amp; ADLBC.TRTPN in (0, 81) &amp; ADLBC.PARAMCD == “GLUC” &amp; ADLBC.AVISITN is not missing</p>
+<p><br>
+</p>
+<p>Treatment Groups: ADLBC.TRTPN Placebo Xanomeline High Dose</p></td>
+</tr>
+<tr class="even">
+<td>tlf-kmplot.r</td>
+<td>tlf.kmplot-pilot3.pdf</td>
+<td>ADSL.STUDYID ADSL.USUBJID ADSL.SAFFL ADSL.TRT01A ADTTE.STUDYID ADTTE.USUBJID ADTTE.PARAMCD ADTTE.AVAL ADTTE.CNSR</td>
+<td><p>STUDYID== “CDISCPILOT01”</p>
+<p>Population: ADSL.SAFFL == “Y”</p>
+<p>Treatment Groups: ADSL.TRT01A Placebo Xanomeline Low Dose Xanomeline High Dose</p>
+<p>Parameters: ADTTE.PARAMCD == “TTDE”</p></td>
+</tr>
+</tbody>
+</table>
+<p>For reference, below is a description of the analysis programs utilized and outputs generated in Pilot 1.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Program Name</strong></th>
+<th><strong>Output Table Number</strong></th>
+<th><strong>Title</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tlf-demographic.r</td>
+<td>Table 14-2.01</td>
+<td>Summary of Demographic and Baseline Characteristics</td>
+</tr>
+<tr class="even">
+<td>tlf-primary.r</td>
+<td>Table 14-3.01</td>
+<td>Primary Endpoint Analysis: ADAS Cog (11) - Change from Baseline to Week 24 - LOCF</td>
+</tr>
+<tr class="odd">
+<td>tlf-efficacy.r</td>
+<td>Table 14-3.02</td>
+<td>ANCOVA of Change from Baseline at Week 20</td>
+</tr>
+<tr class="even">
+<td>tlf-kmplot.r</td>
+<td>Figure 14-1</td>
+<td>KM plot for Time to First Dermatologic Event: Safety population</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="proprietary-r-packages" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="proprietary-r-packages"><span class="header-section-number">7.4</span> Proprietary R Packages</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>R Package</strong></td>
+<td><strong>Package version</strong></td>
+<td><strong>Package Description</strong></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/RConsortium/submissions-pilot3-utilities">pilot3utils</a></td>
+<td>0.0.2</td>
+<td><p>The objective of this utility package is to support the <a href="https://rconsortium.github.io/submissions-wg/">R Consortium R submission Pilot 3 Project</a>. It contains all utility functions that were used in the generation of the deliverables: formatting of ADaM variables and analysis results</p>
+<p>summarize mixed model analysis</p>
+<p>formatting of layouts</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="open-source-r-analysis-packages" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="open-source-r-analysis-packages"><span class="header-section-number">7.5</span> Open-source R Analysis Packages</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>R Package</strong></td>
+<td><strong>Package version</strong></td>
+<td><strong>Package Description</strong></td>
+</tr>
+<tr class="even">
+<td>admiral</td>
+<td>0.10.1</td>
+<td><p>A toolbox for programming Clinical Data Interchange Standards Consortium (CDISC) compliant Analysis Data Model (ADaM) datasets in R. ADaM datasets are a mandatory part of any New Drug or Biologics License Application submitted to the United States Food and Drug Administration (FDA). Analysis derivations are implemented in accordance with the “Analysis Data Model Implementation Guide” (CDISC Analysis Data Model Team, 2021, https://www.cdisc.org/standards/</p>
+<p>foundational/adam/adamig-v1-3-release-package).</p></td>
+</tr>
+<tr class="odd">
+<td>cowplot</td>
+<td>1.1.1</td>
+<td>Provides various features that help with creating publication-quality figures with ‘ggplot2’, such as a set of themes, functions to align plots and arrange them into complex compound figures, and functions that make it easy to annotate plots and or mix plots with images. The package was originally written for internal use in the Wilke lab, hence the name (Claus O. Wilke’s plot package). It has also been used extensively in the book Fundamentals of Data Visualization.</td>
+</tr>
+<tr class="even">
+<td>diffdf</td>
+<td>1.0.4</td>
+<td>Functions for comparing two data.frames against each other. The core functionality is to provide a detailed breakdown of any differences between two data.frames as well as providing utility functions to help narrow down the source of problems and differences.</td>
+</tr>
+<tr class="odd">
+<td>dplyr</td>
+<td>1.1.0</td>
+<td><p>A fast, consistent tool for working with data frame like</p>
+<p>objects, both in memory and out of memory.</p></td>
+</tr>
+<tr class="even">
+<td>emmeans</td>
+<td>1.8.5</td>
+<td><p>Obtain estimated marginal means (EMMs) for many linear, generalized linear, and mixed models. Compute contrasts or linear functions of EMMs, trends, and comparisons of slopes. Plots and other displays.</p>
+<p>Least-squares means are discussed, and the term “estimated marginal means” is suggested, in Searle, Speed, and Milliken (1980) Population marginal means</p>
+<p>in the linear model: An alternative to least squares means, The American Statistician 34(4), 216-221 &lt;doi:10.1080/00031305.1980.10483031&gt;.</p></td>
+</tr>
+<tr class="odd">
+<td>ggplot2</td>
+<td>3.4.1</td>
+<td>A system for ‘declaratively’ creating graphics, based on “The Grammar of Graphics”. You provide the data, tell ‘ggplot2’ how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.</td>
+</tr>
+<tr class="even">
+<td>haven</td>
+<td>2.5.2</td>
+<td>Import foreign statistical formats into R via the embedded ‘ReadStat’ C library, &lt;https://github.com/WizardMac/ReadStat&gt;.</td>
+</tr>
+<tr class="odd">
+<td>lubridate</td>
+<td>1.9.2</td>
+<td>Functions to work with date-times and time-spans: fast and user friendly parsing of date-time data, extraction and updating of components of a date-time (years, months, days, hours, minutes, and seconds), algebraic manipulation on date-time and time-span objects. The ‘lubridate’ package has a consistent and memorable&nbsp; syntax that makes working with dates easy and fun.</td>
+</tr>
+<tr class="even">
+<td>metacore</td>
+<td>0.1.2</td>
+<td>Create an immutable container holding metadata for the purpose of better enabling programming activities and functionality of other packages within the clinical programming workflow.</td>
+</tr>
+<tr class="odd">
+<td>metatools</td>
+<td>0.1.5</td>
+<td>Uses the metadata information stored in ‘metacore’ objects to check and build metadata associated columns.</td>
+</tr>
+<tr class="even">
+<td>pharmaRTF</td>
+<td>0.1.4</td>
+<td><p>Enhanced RTF wrapper written in R for use with existing R tables packages such as ‘Huxtable’ or ‘GT’. This package fills a gap where tables in certain packages can be written out to RTF, but cannot add certain metadata</p>
+<p>or features to the document that are required/expected in a report for a regulatory submission, such as multiple levels of titles and footnotes, making the document landscape, and controlling properties such as margins.</p></td>
+</tr>
+<tr class="odd">
+<td>r2rtf</td>
+<td>1.0.1</td>
+<td>Create production-ready Rich Text Format (RTF) table and figure with flexible format.</td>
+</tr>
+<tr class="even">
+<td>rtables</td>
+<td>0.6.0</td>
+<td><p>Reporting tables often have structure that goes beyond simple rectangular data. The ‘rtables’ package provides a framework for declaring complex multi-level tabulations</p>
+<p>and then applying them to data. This framework models both tabulation and the resulting tables as hierarchical, tree-like objects which support sibling sub-tables, arbitrary splitting or grouping of data in row and column dimensions, cells containing multiple values, and the concept of contextual summary computations. A convenient pipe-able interface is provided for declaring table layouts and the corresponding computations, and then applying them to data.</p></td>
+</tr>
+<tr class="odd">
+<td>stringr</td>
+<td>1.5.0</td>
+<td>A consistent, simple and easy to use set of wrappers around the fantastic ‘stringi’ package. All function and argument names (and positions) are consistent, all functions deal with “NA”’s and zero length vectors in the same way, and the output from one function is easy to feed into the input of another.</td>
+</tr>
+<tr class="even">
+<td>tidyr</td>
+<td>1.3.0</td>
+<td><p>Tools to help to create tidy data, where each column is a</p>
+<p>variable, each row is an observation, and each cell contains a single value. ‘tidyr’ contains tools for changing the shape (pivoting) and hierarchy (nesting and ‘unnesting’) of a dataset, turning deeply nested lists into rectangular data frames (‘rectangling’), and extracting values out of string columns. It also includes tools for</p>
+<p>working with missing values (both implicit and explicit).</p></td>
+</tr>
+<tr class="odd">
+<td>Tplyr</td>
+<td>1.1.0</td>
+<td>A traceability focused tool created to simplify the data manipulation necessary to create clinical summaries.</td>
+</tr>
+<tr class="even">
+<td>visR</td>
+<td>0.3.1</td>
+<td><p>To enable fit-for-purpose, reusable clinical and medical</p>
+<p>research focused visualizations and tables with sensible defaults and based on graphical principles as described in: “Vandemeulebroecke et al.&nbsp;(2018)” &lt;doi:10.1002/pst.1912&gt;, “Vandemeulebroecke et al.&nbsp;(2019)” &lt;doi:10.1002/psp4.12455&gt;, and “Morris et al.&nbsp;(2019)” &lt;doi:10.1136/bmjopen-2019-030215&gt;.</p></td>
+</tr>
+<tr class="odd">
+<td>xportr</td>
+<td>0.2.0</td>
+<td>Tools to build CDISC compliant data sets and check for CDISC compliance.</td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="directory-structure" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Directory Structure</h1>
+<p>m1</p>
+<p>└── cover-letter.pdf</p>
+<p>└── report-tlf-pilot3.pdf</p>
+<p>└── response-FDA-IR-pilot3.pdf</p>
+<p>m5</p>
+<p>└── sap-cdiscpilot01.pdf</p>
+<p>└── datasets</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;└── rconsortiumpilot3</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── tabulations</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; ├── sdtm</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── blankcrf.pdf</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── define-v1-updated-html.xsl</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── define.pdf</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── define.xml</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ae.xpt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # SDTM datasets in XPT format</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── cm.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── dm.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ds.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ex.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── lb.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── mh.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── qs.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── relrec.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── sc.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── se.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── suppae.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── suppdm.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── suppds.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── supplb.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── sv.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ta.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── te.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ti.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── ts.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── tv.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; └── vs.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── analysis</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; ├── adam</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── programs</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adadas.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adae.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adlbc.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adsl.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adtte.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── tlf-demographic.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── tlf-efficacy.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── tlf-kmplot.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── tlf-primary.r</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; └── renv.lock</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; ├── datasets</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adrg.pdf</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adam-pilot-3.xlsx</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── define.xml</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adadas.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adae.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adlbc.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adsl.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── adtte.xpt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp; │ &nbsp; │ &nbsp; ├── define2-0-0.xsl</p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="appendix" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Appendix</h1>
+<section id="appendix-1-pilot-3-installation-and-usage" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="appendix-1-pilot-3-installation-and-usage"><span class="header-section-number">9.1</span> Appendix 1 : Pilot 3 Installation and Usage</h2>
+<p>To install and execute the R programs, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 3 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: C:\pilot3.</p>
+<p>In&nbsp; addition, create&nbsp; a&nbsp; new&nbsp; directory&nbsp; to&nbsp; hold&nbsp; the&nbsp; unpacked&nbsp; Pilot&nbsp; 3&nbsp; ADaM and tlf programs and files. For demonstration purposes, the procedures below assume the new directory is this location: C:\pilot3-files, where the unpacked files are shown as the m1 and m5 directories.</p>
+<p><img src="images/clipboard-641727471.png" class="img-fluid"></p>
+<section id="installation-of-r-and-r-studio" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="installation-of-r-and-r-studio"><span class="header-section-number">9.1.1</span> Installation of R and R Studio</h3>
+<p>Download and install R 4.2.3 for Windows from <a href="https://cran.r-project.org/bin/windows/base/old/4.2.3/" class="uri">https://cran.r-project.org/bin/windows/base/old/4.2.3/</a>. Then download and run the <a href="https://cran.r-project.org/bin/windows/base/old/4.2.3/R-4.2.3-win.exe">R-4.2.3-win.exe</a> file. Also download RStudio for Windows by visiting <a href="https://dailies.rstudio.com/version/2023.03.1+446.pro1/" class="uri">https://dailies.rstudio.com/version/2023.03.1+446.pro1/</a></p>
+</section>
+<section id="create-a-new-r-studio-project-within-the-pilot3-files-directory" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="create-a-new-r-studio-project-within-the-pilot3-files-directory"><span class="header-section-number">9.1.2</span> Create a new R Studio project within the pilot3-files directory</h3>
+<ul>
+<li><p>Open R Studio</p></li>
+<li><p>Select File -&gt; New Project</p></li>
+<li><p>In the Create Project dialog box, choose Existing Directory</p></li>
+<li><p>In the Create Project from Existing Directory dialog box, click the Browse button and navigate to the C:\pilot3-files directory.&nbsp;</p></li>
+<li><p>Once the location has been confirmed, click the Create Project button.</p></li>
+<li><p>These .Rproj files will be created.</p></li>
+</ul>
+<p><img src="images/clipboard-2366076638.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is possible that the <code>.Rproj.user</code> folder may not have generated for you or or may not be visible as it is a hidden folder. If so, this is fine as it will not be necessary in order to run the analysis programs below.</p>
+</div>
+</div>
+</section>
+<section id="installation-of-r-packages" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="installation-of-r-packages"><span class="header-section-number">9.1.3</span> Installation of R Packages</h3>
+<p>A minimum set of R packages are required to ensure the Pilot 3 analysis programs are successfully run and the custom package environment used for the application is replicated correctly.&nbsp;Please follow these steps below to install these R packages.</p>
+<ol type="1">
+<li><p>In the <code>Files</code> window pane, ensure that this directory</p>
+<p><code>~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs</code></p>
+<p>has both the <code>renv-lock.txt</code> and <code>pilot3utils_0.0.2.zip</code> files.</p></li>
+</ol>
+<p><img src="images/clipboard-398207727.png" class="img-fluid"></p>
+<ol start="2" type="1">
+<li>In the R Studio console install the {remotes} package:</li>
+</ol>
+<pre><code>        install.packages("remotes")</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><em>The console may display a warning message about Rtools being required to build R packages. <strong>However the Rtools utility is not required to run the programs in this pilot 3 study.</strong></em></p></li>
+<li><p><em>If you receive a warning showing “cannot open URL&nbsp; <a href="https://cran.rstudio.com/src/contrib/PACKAGES" class="uri">https://cran.rstudio.com/src/contrib/PACKAGES</a>‘“, this is due to the default R Studio option ’Use secure download method for HTTP’. In R Studio, go to Tools → Global Options → Packages, then uncheck the ‘Use secure download method for HTTP’ option, then retry installation.</em></p></li>
+</ul>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Then,&nbsp; install the {renv} package, version 0.17.0:</li>
+</ol>
+<pre><code>        remotes::install_version("renv", version = "0.17.0")</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>If not already set, please verify that the working directory is already set to the project folder.</em></p>
+<ol type="1">
+<li><p><code>getwd()</code></p></li>
+<li><p>If not pointing to root project directory then do : <code>setwd("~/pilot3-files")</code></p></li>
+</ol>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Move the ‘renv-lock.txt’ to the root project directory and rename to ‘renv.lock’ :</li>
+</ol>
+<pre><code>./pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs/renv-lock.txt 
+--&gt; ./pilot3-files/renv.lock</code></pre>
+<p><img src="images/clipboard-3005280222.png" class="img-fluid"></p>
+<p><img src="images/clipboard-2461342323.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3313061033.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li><p>Restart the R Session.</p>
+<p><img src="images/clipboard-1220328888.png" class="img-fluid"></p></li>
+<li><p>Run the code below, then select option 1 :</p>
+<p><code>renv::init()</code></p>
+<p><img src="images/clipboard-2206726057.png" class="img-fluid"></p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>If using <code>{renv}</code> for the first time, you may get a ‘Welcome’ message describing the renv folder structure and its components. It will also list the packages that will be installed from the <code>renv.lock</code> file. At the end it will ask you if you want to proceed. Select ‘y’.</li>
+</ul>
+<p><code>Do you want to proceed? [y/N]: y</code></p>
+<ul>
+<li>If after selecting option 1, you may receive a warning such as :</li>
+</ul>
+<pre><code>Warning: error downloading 
+'https://packagemanager.posit.co/cran/2023-03-15/bin/windows/contrib/4.2/
+PACKAGES.rds' 
+['CreateProcess' failed to run 'C:\WINDOWS\SYSTEM32\curl.exe --config 
+"C:\Users\laxamanj\AppData\Local\Temp\RtmpQrN0y7\renv-download-config-
+2e24149c3b5f"']</code></pre>
+<ul>
+<li>If so, then run again selecting option 3 instead :</li>
+</ul>
+<p><img src="images/clipboard-3523315358.png" class="img-fluid"></p>
+<ul>
+<li>This warning will show, which can be ignored :</li>
+</ul>
+<p><img src="images/clipboard-2575842320.png" class="img-fluid"></p>
+<ul>
+<li><p>Open the .Rprofile : C:/pilot3-files/.Rprofile and ensure these 2 lines are there :</p>
+<pre><code>Sys.setenv(RENV_DOWNLOAD_FILE_METHOD = "libcurl")
+source("renv/activate.R")</code></pre>
+<p>e.g.,</p></li>
+</ul>
+<p><img src="images/clipboard-4064866343.png" class="img-fluid"></p>
+<ul>
+<li>Restart the R Session (ignoring the warning once more), then run <code>renv::restore()</code> and select <code>y</code>&nbsp;:</li>
+</ul>
+<p><img src="images/clipboard-1835977816.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3983121962.png" class="img-fluid"></p>
+<p>The package installation procedure may take a few minutes or longer depending on internet bandwidth.</p>
+</div>
+</div>
+<ol start="7" type="1">
+<li>Upon completion of installing packages using <code>{renv}</code>, please restart your R session.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After restarting the R session at this stage, running <code>renv::status()</code> will show us that the only package uninstalled is the {pilot3utils} package.</p>
+<pre><code>The following package(s) are used in this project, but are not installed:
+
+    pilot3utils
+
+Consider installing these packages (for example, using `renv::install()`).
+Then, use `renv::snapshot()` to record these packages in the lockfile.
+Use `renv::dependencies()` to see where these packages appear to be used.</code></pre>
+<p>We may ignore this as we will be installing the {pilot3utils} package in the following steps.</p>
+</div>
+</div>
+<ol start="8" type="1">
+<li><p>Install the {pilot3utils} package following the steps below :</p>
+<ul>
+<li>In R Studio, navigate to your <code>Packages</code> window pane, then click on <code>Install</code>.</li>
+</ul>
+<p><img src="images/clipboard-3779894600.png" class="img-fluid"></p>
+<ul>
+<li>A new window called <code>Install Packages</code> will show up.</li>
+</ul>
+<p><img src="images/clipboard-695201532.png" class="img-fluid"></p>
+<ul>
+<li>In the field <code>Install from:</code>, click on the drop-down menu and select <code>Package Archive File (.zip; .tar.gz)</code></li>
+</ul>
+<p><img src="images/clipboard-1218742851.png" class="img-fluid"></p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This drop-down option is only available on a local Windows installation, not on linux systems.</p>
+</div>
+</div>
+<ul>
+<li>In the field <code>Package Archive</code>, click on <code>Browse...</code> and navigate to this directory to point to the <code>{pilot3utils}</code> package :</li>
+</ul>
+<p><code>~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs/pilot3utils_0.0.2.zip</code></p>
+<p><img src="images/clipboard-3031640318.png" class="img-fluid"></p>
+<ul>
+<li><p>In the field <code>Install to Library:</code>, you may keep this at its default setting.</p></li>
+<li><p>Click <code>Install</code>.</p>
+<p><img src="images/clipboard-2776928439.png" class="img-fluid"></p></li>
+</ul>
+<ol start="9" type="1">
+<li><strong>Set the paths to run the analysis programs</strong></li>
+</ol>
+<p>INPUT path: to rerun the analysis programs, define the path variable</p>
+<ul>
+<li><p>Path for SDTM data: path$sdtm</p></li>
+<li><p>Path to ADaM specifications : path$adam</p></li>
+</ul>
+<p>OUTPUT path: to save the analysis datasets and&nbsp; results, define the path variable</p>
+<ul>
+<li><p>Path for ADaM data: path$adam</p></li>
+<li><p>Path for output TLFs: path$output.&nbsp;</p></li>
+</ul>
+<p>All these paths must be defined before executing the analysis programs. You may do so by first entering the full file path directories to where the SDTM is currently stored and where the ADaMs and Outputs will be generated upon execution of the analysis programs.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before executing the example file paths below, first navigate to the <code>~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis</code> folder and do this :</p>
+<ol type="1">
+<li>Create a copy of the <code>adam</code> folder in the same location and rename the new folder copy as <code>adam-reviewer</code>. The reason for creating this <code>adam-reviewer</code> folder (e.g ../adam-reviewer) is to keep the original ADaM datasets generated by the sponsor (e.g ../adam) so they will not get overwritten upon reviewers’ execution of the analysis programs.</li>
+</ol>
+<p><img src="images/clipboard-2507647878.png" class="img-fluid"></p>
+<p><img src="images/clipboard-2575673838.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3211797445.png" class="img-fluid"></p>
+<ol start="2" type="1">
+<li>In the same location create a new folder called <code>output</code> in order to write the outputs in this folder upon reviewers’ execution of the analysis output programs.</li>
+</ol>
+<p><img src="images/clipboard-3715719545.png" class="img-fluid"></p>
+<p><img src="images/clipboard-366164445.png" class="img-fluid"></p>
+<pre><code># Modify path to the sdtm, adam and output location
+# Output saved in current folder
+
+path &lt;- list(
+  sdtm = "Enter full file path to the sdtm data here",
+  adam = "Enter full file path to where adam data will be written and 
+  sourced here",
+  output = "Enter full file path to where outputs should be saved here"
+  )
+  
+# For example
+
+path &lt;- list(
+  sdtm = "~/pilot3-files/m5/datasets/rconsortiumpilot3/tabulations/sdtm",
+  adam = "~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/
+          adam-reviewer/datasets",
+  output = "~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/output"
+  )</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<ol start="10" type="1">
+<li><strong>Execute analysis program</strong></li>
+</ol>
+<p>To reproduce analysis results, rerun the following programs in the order below from <code>~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam-reviewer/programs</code> :</p>
+<ul>
+<li><p>“adsl.r”</p></li>
+<li><p>“adae.r”</p></li>
+<li><p>“adadas.r”</p></li>
+<li><p>“adlbc.r”</p></li>
+<li><p>“adtte.r”</p></li>
+<li><p>“tlf-demographic.r”</p></li>
+<li><p>“tlf-efficacy.r”</p></li>
+<li><p>“tlf-kmplot.r”</p></li>
+<li><p>“tlf-primary.r”</p></li>
+</ul>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="appendix-2-qc-findings" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="appendix-2-qc-findings"><span class="header-section-number">9.2</span> Appendix 2 : QC Findings</h2>
+<section id="adsl" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="adsl"><span class="header-section-number">9.2.1</span> ADSL</h3>
+<p>The R-generated ADSL matches the original ADSL from <a href="https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM">CDISC pilot data</a>, besides the following mismatches:</p>
+<ul>
+<li>Subject 01-702-1082 has a missing value for BMIBLGR1 in the R-generated ADSL, whilst BMIBLGR1 = “&lt;25” in the original ADSL. This is an issue with the original ADSL, as this subject’s BMI at baseline (BMIBL) is missing and therefore the subject shouldn’t be assigned a BMI at baseline group.</li>
+</ul>
+</section>
+<section id="adae" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="adae"><span class="header-section-number">9.2.2</span> ADAE</h3>
+<p>The R-generated ADAE matches the original ADAE from <a href="https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM">CDISC pilot data</a>, besides the following mismatches: There is an issue with the original CDISC pilot dataset. ADURN is blank, where AESEQ is (5, 6, 7, 8) for the original CDISC dataset for Subject below:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> adae_orig <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">'01-716-1418'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">select</span>(USUBJID,TRTSDT,ASTDT,AENDT,ADURN,ADURU,AESEQ)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 10 × 7</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   USUBJID     TRTSDT     ASTDT      AENDT      ADURN ADURU AESEQ</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span>     <span class="dv">3</span> DAY       <span class="dv">1</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="cn">NA</span>            <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">2</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span>     <span class="dv">3</span> DAY       <span class="dv">3</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span> <span class="cn">NA</span>            <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">4</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-09-26</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">5</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-10-04</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">6</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-09-26</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">7</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-10-04</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">8</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-09-26</span> <span class="dv">2013-11-11</span>    <span class="dv">47</span> DAY       <span class="dv">9</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-09-26</span> <span class="dv">2013-11-11</span>    <span class="dv">47</span> DAY      <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Because it seems the original SDTM.AE.AESTDTC was missing Day, where it seems the original ADAE derivation for ADURN was probably using this date instead of the imputed date. Because day is missing in AESTDTC, ADURN can’t derive days.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> ae <span class="sc">%&gt;%</span> <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">'01-716-1418'</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(USUBJID,AESTDTC,AESEQ) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(AESEQ)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 10 × 3</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>   USUBJID     AESTDTC    AESEQ</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span>     <span class="dv">1</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span>     <span class="dv">2</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span>     <span class="dv">3</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-07</span>     <span class="dv">4</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> <span class="dv">01-716-1418</span> <span class="dv">2013-07</span>        <span class="dv">5</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">01-716-1418</span> <span class="dv">2013-07</span>        <span class="dv">6</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> <span class="dv">01-716-1418</span> <span class="dv">2013-07</span>        <span class="dv">7</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> <span class="dv">01-716-1418</span> <span class="dv">2013-07</span>        <span class="dv">8</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> <span class="dv">01-716-1418</span> <span class="dv">2013-09-26</span>     <span class="dv">9</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="dv">01-716-1418</span> <span class="dv">2013-09-26</span>    <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>but the same records, derived in the Pilot 3 dataset do show a calculation since we are using the imputed ASTDT, per the define (ADURN=AENDT-ASTDT+1).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AE.AESTDTC, converted to a numeric SAS date. Some events with partial dates </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#are imputed in a conservative manner. If the day component is missing, a value </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#of '01' is used. If both the month and day are missing no imputation is </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#performed as these dates clearly indicate a start prior to the beginning of </span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#treatment. There are no events with completely missing start dates.</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> adae0 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">'01-716-1418'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(USUBJID,TRTSDT,ASTDT,AESTDTC,AENDT,AEENDY,ADURN,ADURU,AESEQ)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 10 × 9</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>   USUBJID     TRTSDT     ASTDT      AESTDTC    AENDT      AEENDY ADURN ADURU AESEQ</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>date<span class="sc">&gt;</span>      <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span>      <span class="dv">3</span>     <span class="dv">3</span> DAY       <span class="dv">1</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="cn">NA</span>             <span class="cn">NA</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">2</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span>      <span class="dv">3</span>     <span class="dv">3</span> DAY       <span class="dv">3</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-05-07</span> <span class="dv">2013-05-07</span> <span class="cn">NA</span>             <span class="cn">NA</span>    <span class="cn">NA</span> <span class="cn">NA</span>        <span class="dv">4</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-07</span>    <span class="dv">2013-10-04</span>    <span class="dv">153</span>    <span class="dv">96</span> DAY       <span class="dv">6</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-07</span>    <span class="dv">2013-10-04</span>    <span class="dv">153</span>    <span class="dv">96</span> DAY       <span class="dv">8</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-07</span>    <span class="dv">2013-09-26</span>    <span class="dv">145</span>    <span class="dv">88</span> DAY       <span class="dv">5</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-07-01</span> <span class="dv">2013-07</span>    <span class="dv">2013-09-26</span>    <span class="dv">145</span>    <span class="dv">88</span> DAY       <span class="dv">7</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-09-26</span> <span class="dv">2013-09-26</span> <span class="dv">2013-11-11</span>    <span class="dv">191</span>    <span class="dv">47</span> DAY       <span class="dv">9</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="dv">01-716-1418</span> <span class="dv">2013-05-05</span> <span class="dv">2013-09-26</span> <span class="dv">2013-09-26</span> <span class="dv">2013-11-11</span>    <span class="dv">191</span>    <span class="dv">47</span> DAY      <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This latter approach should be the correct approach.</p>
+<p>Due to this, we have outlined the expected differences here :</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">diffdf</span>(adae, adae_orig, <span class="at">keys =</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"USUBJID"</span>, <span class="st">"AESEQ"</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Differences found between the objects<span class="sc">!</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>A summary is given below.</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>There are columns <span class="cf">in</span> BASE and COMPARE with differing attributes <span class="sc">!!</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>All rows are shown <span class="cf">in</span> table below</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>ADURN values will be populated in Pilot 3 (i.e.&nbsp;under <code>BASE</code>), following the latter derivation approach (i.e.&nbsp;ADURN=AENDT-ASTDT+1) for Subject 01-716-1418 where AESEQ is (5, 6, 7, 8) specified in define.</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>All rows are shown <span class="cf">in</span> table below</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">=========================================================</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>   VARIABLE    STUDYID       USUBJID    AESEQ  BASE  COMPARE </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-----------------------------------------------------------</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    ADURN    CDISCPILOT01  <span class="dv">01-716-1418</span>    <span class="dv">5</span>     <span class="dv">88</span>    <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    ADURN    CDISCPILOT01  <span class="dv">01-716-1418</span>    <span class="dv">6</span>     <span class="dv">96</span>    <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    ADURN    CDISCPILOT01  <span class="dv">01-716-1418</span>    <span class="dv">7</span>     <span class="dv">88</span>    <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    ADURN    CDISCPILOT01  <span class="dv">01-716-1418</span>    <span class="dv">8</span>     <span class="dv">96</span>    <span class="sc">&lt;</span><span class="cn">NA</span><span class="sc">&gt;</span>   </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-----------------------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>ADURU should be set to ‘DAYS’ (i.e.&nbsp;under <code>BASE</code>) instead of ‘DAY’ when ADURN is not missing. Updated in Pilot 3 define.</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>First <span class="dv">10</span> of <span class="dv">718</span> rows are shown <span class="cf">in</span> table below</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">=========================================================</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>   VARIABLE    STUDYID       USUBJID    AESEQ  BASE  COMPARE </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-----------------------------------------------------------</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1015</span>    <span class="dv">3</span>    DAYS    DAY   </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1023</span>    <span class="dv">1</span>    DAYS    DAY   </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1023</span>    <span class="dv">4</span>    DAYS    DAY   </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1047</span>    <span class="dv">1</span>    DAYS    DAY   </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1047</span>    <span class="dv">2</span>    DAYS    DAY   </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1097</span>    <span class="dv">2</span>    DAYS    DAY   </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1097</span>    <span class="dv">3</span>    DAYS    DAY   </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1097</span>    <span class="dv">5</span>    DAYS    DAY   </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1097</span>    <span class="dv">6</span>    DAYS    DAY   </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    ADURU    CDISCPILOT01  <span class="dv">01-701-1097</span>    <span class="dv">7</span>    DAYS    DAY   </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-----------------------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adlbc" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="adlbc"><span class="header-section-number">9.2.3</span> ADLBC</h3>
+<p>The R-generated ADLBC matches the original ADLBC from <a href="https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM">CDISC pilot data</a>, besides the following mismatches:</p>
+<p>Three variables from R-generated ADLBC have class date while the same variables are numeric in the CDISC ADLBC. We opted to keep the date class in our R-generated ADLB.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">diffdf</span>(adlbc, qc_adlbc, <span class="at">keys =</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"USUBJID"</span>, <span class="st">"AVISIT"</span>, <span class="st">"LBSEQ"</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Differences found between the objects<span class="sc">!</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>A summary is given below.</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>There are columns <span class="cf">in</span> BASE and COMPARE with different classes <span class="sc">!!</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>All rows are shown <span class="cf">in</span> table below</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">================================</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>   VARIABLE  CLASS.BASE  CLASS.COMP </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">----------------------------------</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>     ADT        Date      numeric   </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    TRTEDT      Date      numeric   </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    TRTSDT      Date      numeric   </span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="sc">----------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adadas" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="adadas"><span class="header-section-number">9.2.4</span> ADADAS</h3>
+<p>The R-generated ADADAS matches original ADADAS from <a href="https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM">CDISC pilot data</a>, except for the records where <code>PARAMCD=ACTOT, DTYPE=LOCF</code>. This is an issue from the CDISC ADADAS.</p>
+<ul>
+<li>CDISC SDTM/QS : 818 records for <code>QSTESTCD=ACTOT</code></li>
+<li>CDISC ADaM/ADADAS : 1040 records for <code>PARAMCD=ACTOT</code>, 799 (directly from QS, <strong>should be 818</strong>) + 241 imputed records (<code>DTYPE=LOCF</code>)</li>
+<li>ADADAS generated by R: 1040 records for <code>PARAMCD=ACTOT</code>, 818 (directly from QS) + 222 imputed records (<code>DTYPE=LOCF</code>)</li>
+</ul>
+<p>Take a detailed example USUBJID=“01-701-1294”</p>
+<p>CDISC QS:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> qs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(QSTESTCD<span class="sc">==</span><span class="st">"ACTOT"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(USUBJID, QSSEQ, VISIT, QSTESTCD, QSTEST,QSSTRESN) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">"01-701-1294"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 4 × 6</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  USUBJID     QSSEQ VISIT     QSTESTCD QSTEST                QSSTRESN</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">01-701-1294</span>  <span class="dv">5015</span> BASELINE  ACTOT    ADAS<span class="sc">-</span><span class="fu">COG</span>(<span class="dv">11</span>) Subscore        <span class="dv">9</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">01-701-1294</span>  <span class="dv">5030</span> WEEK <span class="dv">8</span>    ACTOT    ADAS<span class="sc">-</span><span class="fu">COG</span>(<span class="dv">11</span>) Subscore       <span class="dv">14</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">01-701-1294</span>  <span class="dv">5045</span> WEEK <span class="dv">12</span>   ACTOT    ADAS<span class="sc">-</span><span class="fu">COG</span>(<span class="dv">11</span>) Subscore        <span class="dv">6</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">01-701-1294</span>  <span class="dv">5060</span> RETRIEVAL ACTOT    ADAS<span class="sc">-</span><span class="fu">COG</span>(<span class="dv">11</span>) Subscore        <span class="dv">9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>CDISC ADADAS :</p>
+<p><strong>For the record with <code>QSSEQ=5045</code> and <code>AVISIT=Week 8</code>, <code>DTYPE</code> is populated as <code>LOCF</code> , but this record is directly from <code>qs</code> dataset, not imputed.</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> qc_adadas <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PARAMCD<span class="sc">==</span><span class="st">"ACTOT"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">select</span>(USUBJID, QSSEQ, PARAMCD, AVISITN, AVISIT, VISIT, AVAL, DTYPE, </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>            ANL01FL, ADT, ADY) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>   <span class="fu">arrange</span>(USUBJID, AVISITN) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">"01-701-1294"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 11</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  USUBJID     QSSEQ PARAMCD AVISITN AVISIT   VISIT      AVAL DTYPE  ANL01FL </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">01-701-1294</span>  <span class="dv">5015</span> ACTOT         <span class="dv">0</span> Baseline BASELINE      <span class="dv">9</span> <span class="st">""</span>     <span class="st">"Y"</span>     </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">01-701-1294</span>  <span class="dv">5030</span> ACTOT         <span class="dv">8</span> Week <span class="dv">8</span>   WEEK <span class="dv">8</span>       <span class="dv">14</span> <span class="st">""</span>     <span class="st">"Y"</span>     </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">01-701-1294</span>  <span class="dv">5045</span> ACTOT         <span class="dv">8</span> Week <span class="dv">8</span>   WEEK <span class="dv">12</span>      <span class="dv">14</span> <span class="st">"LOCF"</span> <span class="st">""</span>      </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">01-701-1294</span>  <span class="dv">5045</span> ACTOT        <span class="dv">16</span> Week <span class="dv">16</span>  WEEK <span class="dv">12</span>      <span class="dv">14</span> <span class="st">"LOCF"</span> <span class="st">"Y"</span>     </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">01-701-1294</span>  <span class="dv">5060</span> ACTOT        <span class="dv">24</span> Week <span class="dv">24</span>  RETRIEVAL     <span class="dv">9</span> <span class="st">""</span>     <span class="st">"Y"</span>     </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>ADT          ADY</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-03-24</span>     <span class="dv">1</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-05-22</span>    <span class="dv">60</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-06-14</span>    <span class="dv">83</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-06-14</span>    <span class="dv">83</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-10-08</span>   <span class="dv">199</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ADADAS generated by R:</p>
+<p><code>DTYPE</code> is not <code>LOCF</code> for the record with <code>QSSEQ=5045</code> and <code>AVISIT=Week 8</code>, as this record is directly from <code>qs</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> adadas <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PARAMCD<span class="sc">==</span><span class="st">"ACTOT"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>       <span class="fu">select</span>(USUBJID, QSSEQ, PARAMCD, AVISITN, AVISIT, VISIT, AVAL, DTYPE, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                ANL01FL, ADT, ADY) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>       <span class="fu">arrange</span>(USUBJID, AVISITN) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(USUBJID<span class="sc">==</span><span class="st">"01-701-1294"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 5 × 11</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  USUBJID     QSSEQ PARAMCD AVISITN AVISIT   VISIT      AVAL DTYPE  ANL01FL</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">01-701-1294</span>  <span class="dv">5015</span> ACTOT         <span class="dv">0</span> Baseline BASELINE      <span class="dv">9</span> <span class="st">""</span>     <span class="st">"Y"</span>    </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">01-701-1294</span>  <span class="dv">5030</span> ACTOT         <span class="dv">8</span> Week <span class="dv">8</span>   WEEK <span class="dv">8</span>       <span class="dv">14</span> <span class="st">""</span>     <span class="st">"Y"</span>    </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">01-701-1294</span>  <span class="dv">5045</span> ACTOT         <span class="dv">8</span> Week <span class="dv">8</span>   WEEK <span class="dv">12</span>       <span class="dv">6</span> <span class="st">""</span>     <span class="st">""</span>     </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">01-701-1294</span>  <span class="dv">5030</span> ACTOT        <span class="dv">16</span> Week <span class="dv">16</span>  WEEK <span class="dv">8</span>       <span class="dv">14</span> <span class="st">"LOCF"</span> <span class="st">"Y"</span>    </span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">01-701-1294</span>  <span class="dv">5060</span> ACTOT        <span class="dv">24</span> Week <span class="dv">24</span>  RETRIEVAL     <span class="dv">9</span> <span class="st">""</span>     <span class="st">"Y"</span>    </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>ADT          ADY</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>date<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-03-24</span>     <span class="dv">1</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-05-22</span>    <span class="dv">60</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-06-14</span>    <span class="dv">83</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-05-22</span>    <span class="dv">60</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="dv">2013-10-08</span>   <span class="dv">199</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The same issue occurred for other subjects and resulted in the following discrepancies:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>There are rows <span class="cf">in</span> BASE that are not <span class="cf">in</span> COMPARE <span class="sc">!!</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>First <span class="dv">10</span> of <span class="dv">33</span> rows are shown <span class="cf">in</span> table below</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">=========================================</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>     USUBJID    PARAMCD  AVISIT      ADT     </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-------------------------------------------</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-701-1294</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-05-22</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-701-1302</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-10-22</span> </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-703-1076</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-12-17</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-703-1076</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2013-12-17</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1010</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2014-06-13</span> </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1065</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-12-20</span> </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1065</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2013-12-20</span> </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1120</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2014-01-27</span> </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1120</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2014-01-27</span> </span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-705-1310</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-12-26</span> </span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-------------------------------------------</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>There are rows <span class="cf">in</span> COMPARE that are not <span class="cf">in</span> BASE <span class="sc">!!</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>First <span class="dv">10</span> of <span class="dv">33</span> rows are shown <span class="cf">in</span> table below</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">=========================================</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>     USUBJID    PARAMCD  AVISIT      ADT     </span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-------------------------------------------</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-701-1294</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-06-14</span> </span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-701-1302</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-11-05</span> </span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-703-1076</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-12-24</span> </span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-703-1076</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2013-12-24</span> </span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1010</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2014-07-09</span> </span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1065</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2013-12-24</span> </span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1065</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2013-12-24</span> </span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1120</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2014-02-03</span> </span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-704-1120</span>   ACTOT   Week <span class="dv">24</span>  <span class="dv">2014-02-03</span> </span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>   <span class="dv">01-705-1310</span>   ACTOT   Week <span class="dv">16</span>  <span class="dv">2014-01-23</span> </span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-------------------------------------------</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>Not all Values Compared Equal</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>All rows are shown <span class="cf">in</span> table below</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">===========================</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>   Variable  No of Differences </span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-----------------------------</span></span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>     AVAL           <span class="dv">19</span>         </span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>     CHG            <span class="dv">19</span>         </span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>     PCHG           <span class="dv">19</span>         </span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>    DTYPE           <span class="dv">19</span>         </span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>  <span class="sc">----------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the CDISC ADADAS, there are 19 subjects whose records have the incorrect <code>DTYPE=LOCF</code> value instead of the expected missing <code>DTYPE</code>, resulting IN different <code>AVAL/CHG/PCHG</code> values for these subjects.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> diff <span class="ot">&lt;-</span> <span class="fu">diffdf</span>(adadas, qc_adadas, <span class="at">keys =</span> <span class="fu">c</span>(<span class="st">"USUBJID"</span>, <span class="st">"PARAMCD"</span>, <span class="st">"AVISIT"</span>, <span class="st">"ADT"</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">count</span>(diff<span class="sc">$</span>VarDiff_AVAL, USUBJID)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 19 × 2</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   USUBJID         n</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>int<span class="sc">&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> <span class="dv">01-701-1294</span>     <span class="dv">1</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> <span class="dv">01-701-1302</span>     <span class="dv">1</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="dv">01-703-1076</span>     <span class="dv">1</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="dv">01-704-1065</span>     <span class="dv">1</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> <span class="dv">01-704-1120</span>     <span class="dv">1</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> <span class="dv">01-705-1292</span>     <span class="dv">1</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> <span class="dv">01-705-1310</span>     <span class="dv">1</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> <span class="dv">01-708-1347</span>     <span class="dv">1</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> <span class="dv">01-709-1102</span>     <span class="dv">1</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="dv">01-709-1259</span>     <span class="dv">1</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span> <span class="dv">01-710-1045</span>     <span class="dv">1</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span> <span class="dv">01-710-1278</span>     <span class="dv">1</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span> <span class="dv">01-710-1300</span>     <span class="dv">1</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span> <span class="dv">01-710-1315</span>     <span class="dv">1</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span> <span class="dv">01-714-1068</span>     <span class="dv">1</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span> <span class="dv">01-715-1107</span>     <span class="dv">1</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="dv">01-716-1373</span>     <span class="dv">1</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span> <span class="dv">01-718-1172</span>     <span class="dv">1</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span> <span class="dv">01-718-1250</span>     <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adtte" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="adtte"><span class="header-section-number">9.2.5</span> ADTTE</h3>
+<p>The R-generated ADTTE matches original ADTTE from <a href="https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM">CDISC pilot data</a> except for minor SAS format discrepancies. Since this adtte was generated in R compared to SAS formats, the columns Type &amp; Length in the define should be sufficient enough to describe the attributes of these variables.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">diffdf</span>(adtte, qc_adtte, <span class="at">keys =</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"USUBJID"</span>, <span class="st">"PARAMCD"</span>, <span class="st">"SRCDOM"</span>, <span class="st">"STARTDT"</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>Differences found between the objects<span class="sc">!</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>A summary is given below.</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>There are columns <span class="cf">in</span> BASE and COMPARE with differing attributes <span class="sc">!!</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>First <span class="dv">10</span> of <span class="dv">20</span> rows are shown <span class="cf">in</span> table below</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">==</span><span class="er">==============================================</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>   VARIABLE  ATTR_NAME   VALUES.BASE  VALUES.COMP </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">------------------------------------------------</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>     AGE     format.sas     <span class="cn">NULL</span>           <span class="dv">3</span>      </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    AGEGR1   format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">5</span>      </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>   AGEGR1N   format.sas     <span class="cn">NULL</span>           <span class="dv">3</span>      </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>   EVNTDESC  format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">25</span>     </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    PARAM    format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">32</span>     </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>   PARAMCD   format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">4</span>      </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>     RACE    format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">32</span>     </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    RACEN    format.sas     <span class="cn">NULL</span>           <span class="dv">3</span>      </span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    SAFFL    format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">1</span>      </span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>     SEX     format.sas     <span class="cn">NULL</span>          <span class="sc">$</span><span class="dv">1</span>      </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">------------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="label-discrepancies" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="label-discrepancies"><span class="header-section-number">9.2.6</span> Label discrepancies</h3>
+<p>In Pilot3, variable labels were updated per ADaM IG 1.1, which caused some discrepancies with original CDISC pilot data label.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 37%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Dataset</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">CDISC pilot data label</th>
+<th style="text-align: left;">Pilot3 label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ADAE</td>
+<td style="text-align: left;">ADURN</td>
+<td style="text-align: left;">Analysis Duration (N)</td>
+<td style="text-align: left;">AE Duration (N)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ADURU</td>
+<td style="text-align: left;">Analysis Duration Units</td>
+<td style="text-align: left;">AE Duration Units</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">AOCCFL</td>
+<td style="text-align: left;">1st Occurrence of Any AE Flag</td>
+<td style="text-align: left;">1st Occurrence within Subject Flag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ADADAS</td>
+<td style="text-align: left;">ANL01FL</td>
+<td style="text-align: left;">Analysis Record Flag 01</td>
+<td style="text-align: left;">Analysis Flag 01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ITTFL</td>
+<td style="text-align: left;">Intent-to-Treat Population Flag</td>
+<td style="text-align: left;">Intent-To-Treat Population Flag</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ADTTE</td>
+<td style="text-align: left;">SRCDOM</td>
+<td style="text-align: left;">Source Data</td>
+<td style="text-align: left;">Source Domain</td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="appendix-3-common-issues" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="appendix-3-common-issues"><span class="header-section-number">9.3</span> Appendix 3 : Common Issues</h2>
+<section id="package-issue-tracking" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="package-issue-tracking"><span class="header-section-number">9.3.1</span> Package issue tracking</h3>
+<section id="package-issues" class="level4" data-number="9.3.1.1">
+<h4 data-number="9.3.1.1" class="anchored" data-anchor-id="package-issues"><span class="header-section-number">9.3.1.1</span> Package issues</h4>
+<ul>
+<li><p><code>haven::read_xpt()</code> Some attributes are dropped after using <code>haven::write_xpt()</code> <code>haven::read_xpt()</code>, e.g., type, length. to do: further check</p></li>
+<li><p><code>xportr::xportr_length()</code> <code>NA_character_</code> is considered as length 2 - <a href="https://github.com/tidyverse/haven/issues/699">issue resolved on Dec 14, 2022</a> to do: to be incorporated in pilot3</p></li>
+</ul>
+</section>
+<section id="potential-improvement" class="level4" data-number="9.3.1.2">
+<h4 data-number="9.3.1.2" class="anchored" data-anchor-id="potential-improvement"><span class="header-section-number">9.3.1.2</span> Potential improvement</h4>
+<ul>
+<li><code>metatools::build_from_derived()</code> https://github.com/pharmaverse/metatools/issues/46 Not urgent feature but nice to have - especially when <code>define.xml</code> is not in good quality</li>
+</ul>
+</section>
+</section>
+<section id="knowledge-sharing" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="knowledge-sharing"><span class="header-section-number">9.3.2</span> Knowledge sharing</h3>
+<p>Summary of similarities and differences between packages, to help user identify the best tool that suits the need. Maybe this could go to <a href="https://bayer-group.github.io/sas2r/">Bayer SAS2R catalog</a> in the future,</p>
+<section id="metatools-vs-xportr" class="level4" data-number="9.3.2.1">
+<h4 data-number="9.3.2.1" class="anchored" data-anchor-id="metatools-vs-xportr"><span class="header-section-number">9.3.2.1</span> <code>metatools</code> vs <code>xportr</code></h4>
+<ul>
+<li><code>metatools::set_variable_labels()</code> vs <code>xportr::xportr_label()</code></li>
+</ul>
+</section>
+<section id="xportr-vs-haven" class="level4" data-number="9.3.2.2">
+<h4 data-number="9.3.2.2" class="anchored" data-anchor-id="xportr-vs-haven"><span class="header-section-number">9.3.2.2</span> <code>xportr</code> vs <code>haven</code></h4>
+<ul>
+<li><code>xportr::xportr_write()</code> vs <code>haven::write_xpt()</code></li>
+</ul>
+</section>
+<section id="diffdf-vs-arsenal" class="level4" data-number="9.3.2.3">
+<h4 data-number="9.3.2.3" class="anchored" data-anchor-id="diffdf-vs-arsenal"><span class="header-section-number">9.3.2.3</span> <code>diffdf</code> vs <code>arsenal</code></h4>
+<ul>
+<li><code>diffdf::diffdf()</code> vs <code>arsenal::comparedf()</code></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,8 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles: {}
+last_built: 2025-02-22T00:14Z
+urls:
+  reference: https://phuse-org.github.io/adrgOS/reference
+  article: https://phuse-org.github.io/adrgOS/articles

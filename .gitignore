@@ -1,10 +1,7 @@
 .Rproj.user
 docs
-<<<<<<< HEAD
 adrgOS.Rcheck/
 adrgOS*.tar.gz
 adrgOS*.tgz
-=======
 /doc/
 /Meta/
->>>>>>> 6-core-variables

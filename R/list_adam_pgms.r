@@ -176,6 +176,28 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
   # 6. reorder columns
   list_adams <- results_df %>% select(program, dataset, functions)
 
+  adrg_adams <- list_adams %>%
+    # 1. Group the dataframe by the 'program' and 'dataset' columns
+    #    (Grouping by dataset ensures it stays in the final output,
+    #     though in this sample they are one-to-one with program)
+    group_by(program, dataset) %>%
+
+    # 2. Summarize the grouped data by pasting all 'functions' strings together
+    #    The 'collapse' argument inserts a newline character (\n) between the entries
+    #    for better readability in the final aggregated cell.
+    summarise(
+      all_functions = paste(functions, collapse = "\n\n")
+    ) %>%
+
+    # 3. Remove the grouping structure (good practice)
+    ungroup()
+
+
   # Print the final combined dataframe
-  return(list_adams)
+  # if (for_adrg == 'Y') {
+  #   return(adrg_adams)
+  # } else if (for_adrg == 'N'){
+  #   return(list_adams)
+  # }
+  return(adrg_adams)
 }

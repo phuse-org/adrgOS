@@ -44,9 +44,6 @@
 #' print(one_adam)
 #' }
 list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
-  library(NCmisc)
-  library(dplyr)
-  library(stringr)
 
   # ----------------------------------------------------------------------
   # 1. Define the directory and get the list of R files

@@ -71,35 +71,48 @@ Common ADSL variables typically include:
 }
 \examples{
 \dontrun{
-# Using the included define.xml file
+# Using the included define.xml file (recommended)
 define_path <- system.file("define.xml", package = "adrgOS")
 if (file.exists(define_path)) {
   variable_info <- extract_variable_info_from_define(define_path)
   common_vars <- extract_common_adsl_variables(variable_info)
   print(common_vars)
+
+  # Filter by minimum domain count
+  high_freq_vars <- extract_common_adsl_variables(
+    variable_info,
+    min_domains_count = 3
+  )
+  print(high_freq_vars)
 }
 
-# Using custom data
+# Alternative: Using custom sample data
 sample_data <- data.frame(
-  Name = c("STUDYID", "USUBJID", "AGE", "SEX", "STUDYID", "USUBJID", "AVAL"),
-  Dataset = c("ADSL", "ADSL", "ADSL", "ADSL", "ADAE", "ADAE", "ADAE"),
-  DataType = c("text", "text", "integer", "text", "text", "text", "float"),
-  Length = c("12", "20", "3", "1", "12", "20", "8"),
+  Name = c("STUDYID", "USUBJID", "AGE", "SEX", "STUDYID", "USUBJID", "AVAL",
+           "STUDYID", "USUBJID", "PARAMCD"),
+  Dataset = c("ADSL", "ADSL", "ADSL", "ADSL", "ADAE", "ADAE", "ADAE",
+              "ADLBC", "ADLBC", "ADLBC"),
+  DataType = c("text", "text", "integer", "text", "text", "text", "float",
+               "text", "text", "text"),
+  Length = c("12", "20", "3", "1", "12", "20", "8", "12", "20", "8"),
   Description = c("Study Identifier", "Unique Subject ID", "Age", "Sex",
-                  "Study Identifier", "Unique Subject ID", "Analysis Value"),
+                  "Study Identifier", "Unique Subject ID", "Analysis Value",
+                  "Study Identifier", "Unique Subject ID", "Parameter Code"),
   Origin = c("Assigned", "Assigned", "Collected", "Collected",
-             "Assigned", "Assigned", "Derived"),
+             "Assigned", "Assigned", "Derived", "Assigned", "Assigned", "Derived"),
   stringsAsFactors = FALSE
 )
 
 # Basic usage
 result <- extract_common_adsl_variables(sample_data)
+print(result)
 
-# Filter by minimum domain count
+# Filter by minimum domain count (now works with improved sample data)
 result_filtered <- extract_common_adsl_variables(
   sample_data,
   min_domains_count = 2
 )
+print(result_filtered)
 
 # Sort by variable name without SAS info
 result_sorted <- extract_common_adsl_variables(
@@ -107,6 +120,7 @@ result_sorted <- extract_common_adsl_variables(
   include_sas_info = FALSE,
   sort_by = "variable_name"
 )
+print(result_sorted)
 }
 
 }

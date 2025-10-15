@@ -108,7 +108,7 @@
 #'   sort_by = "variable_name"
 #' )
 #' print(result_sorted)
-#'
+#' }
 #'
 #' @seealso
 #' \code{\link{extract_variable_info_from_define}} for extracting variable information from define.xml

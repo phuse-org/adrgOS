@@ -8,7 +8,7 @@ Description: Provide tools to be able to fill in sections into the ADRG file.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://phuse-org.github.io/adrgOS/
 Suggests: 
     xml2,

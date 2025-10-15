@@ -2,8 +2,7 @@ Package: adrgOS
 Title: Utility functions for ADRG
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
 Description: Provide tools to be able to fill in sections into the ADRG file. 
 License: MIT + file LICENSE
 Encoding: UTF-8

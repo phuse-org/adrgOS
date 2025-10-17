@@ -4,50 +4,83 @@
 \alias{list_adam_pgms}
 \title{List ADaM Programs, Packages, and Functions}
 \usage{
-list_adam_pgms(target_dir = ".", all_one_file = "YN")
+list_adam_pgms(target_dir = ".", all_one_file = "YN", adrg = "Y")
 }
 \arguments{
 \item{target_dir}{This is the file path to the program(s) that are to be processed.
-If \code{all_one_file} is 'YN', this should be a \strong{directory path}. If
-\code{all_one_file} is 'NY', this should be the \strong{full path to a single R file}.
-Defaults to the current working directory (\code{.}).}
+   If \code{all_one_file} is 'YN', this should be a \strong{directory path}. If
+   \code{all_one_file} is 'NY', this should be the \strong{full path to a single R file}.
+   Defaults to the current working directory (\code{.}).}
 
-\item{all_one_file}{This flag allows all programs in a directory to be processed
-or only one specific program file.
-\itemize{
-\item \code{'YN'} (Default): Process \strong{All} ADaM files in \code{target_dir} (matching \code{^ad.*\\.[rR]$}).
-\item \code{'NY'}: Process \strong{Only} the single file specified by \code{target_dir}.
-}}
+\item{all_one_file}{This flag controls processing scope:
+   \itemize{
+     \item \code{'YN'} (Default): Process \strong{All} ADaM files in \code{target_dir} (matching \code{^ad.*\\.[rR]$}).
+     \item \code{'NY'}: Process \strong{Only} the single file specified by \code{target_dir}.
+   }}
+
+\item{adrg}{Flag to select the output format:
+   \itemize{
+     \item \code{'Y'} (Default): Returns a \strong{Data Frame} formatted for an Analysis Data Reviewers Guide (ADRG), with all package/function usage consolidated into a single string per program.
+     \item \code{'N'}: Returns a \strong{Nested List} structure, where each program's package/function details are stored in a nested data frame for easy programmatic access.
+   }}
 }
 \value{
-A data frame with the following columns:
-\itemize{
-\item \code{program}: The name of the R program file (e.g., "adsl.r").
-\item \code{dataset}: The derived ADaM dataset name (e.g., "adsl.xpt").
-\item \code{functions}: A character string listing all packages and
-their associated functions used in the program (e.g., "admiral: derive_var_dt, derive_vars_duration").
-}
+The output format depends on the \code{adrg} flag:
+   \itemize{
+     \item \strong{If \code{adrg = 'Y'} (Data Frame):} Columns are \code{program}, \code{dataset}, and \code{functions} (a single, newline-separated string).
+     \item \strong{If \code{adrg = 'N'} (Nested List):} A list where each element has:
+        \itemize{
+          \item \code{program}: The R program file name.
+          \item \code{dataset}: The derived ADaM dataset name.
+          \item \code{packages_used}: A nested data frame with columns \code{package} and \code{func_names}.
+        }
+   }
 }
 \description{
-This function reads in R ADaM programs used in R Submissions to list out
-all of the R ADaM programs used and the packages and functions used
-within each R ADaM program. It automatically derives the expected ADaM
-dataset name (\code{.xpt}) from the program file name.
+This function reads R ADaM programs to list all programs used and the packages/functions
+within each. It offers two output formats controlled by the \code{adrg} flag: a nested
+list (for data access) or a flattened data frame (for documentation).
+It automatically derives the expected ADaM dataset name (\code{.xpt}) from the program file name.
 }
 \examples{
 \dontrun{
-# Assuming the directory exists with R files starting with 'ad'
-# 1. Process ALL programs in a directory (all_one_file = 'YN')
-all_adams <- list_adam_pgms(
-  target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
-  all_one_file = 'YN'
-)
+# NOTE: These examples use non-portable file paths and require the files to exist.
 
-# 2. Process ONLY one specified program (all_one_file = 'NY')
-one_adam <- list_adam_pgms(
-  target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adtte.r",
-  all_one_file = 'NY'
+# --- Scenario 1: Process ALL files, Output for ADRG (adrg='Y', default) ---
+# Returns a single data frame with collapsed functions per program.
+adrg_all_adams_df <- list_adam_pgms(
+   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+   all_one_file = 'YN',
+   adrg = 'Y'
 )
-print(one_adam)
+print(adrg_all_adams_df)
+
+# --- Scenario 2: Process ALL files, Output as Nested List (adrg='N') ---
+# Returns a list where each program's details are nested. Ideal for programmatic access.
+all_adams_list <- list_adam_pgms(
+   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+   all_one_file = 'YN',
+   adrg = 'N'
+)
+# Accessing the nested packages_used data frame for the first program:
+# all_adams_list[[1]]$packages_used
+
+# --- Scenario 3: Process ONE file, Output for ADRG (adrg='Y', default) ---
+# Returns a data frame with one row, formatted for the ADRG.
+adrg_one_adam_df <- list_adam_pgms(
+   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+   all_one_file = 'NY',
+   adrg = 'Y'
+)
+print(adrg_one_adam_df)
+
+# --- Scenario 4: Process ONE file, Output as Nested List (adrg='N') ---
+# Returns a list with one element (the specified program's details).
+one_adam_list <- list_adam_pgms(
+   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+   all_one_file = 'NY',
+   adrg = 'N'
+)
+print(one_adam_list)
 }
 }

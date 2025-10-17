@@ -1,28 +1,36 @@
 #' List ADaM Programs, Packages, and Functions
 #'
-#' This function reads in R ADaM programs used in R Submissions to list out
-#' all of the R ADaM programs used and the packages and functions used
-#' within each R ADaM program. It automatically derives the expected ADaM
-#' dataset name (\code{.xpt}) from the program file name.
+#' This function reads R ADaM programs to list all programs used and the packages/functions
+#' within each. It offers two output formats controlled by the \code{adrg} flag: a nested
+#' list (for data access) or a flattened data frame (for documentation).
+#' It automatically derives the expected ADaM dataset name (\code{.xpt}) from the program file name.
 #'
 #' @param target_dir This is the file path to the program(s) that are to be processed.
 #'   If \code{all_one_file} is 'YN', this should be a **directory path**. If
 #'   \code{all_one_file} is 'NY', this should be the **full path to a single R file**.
 #'   Defaults to the current working directory (\code{.}).
-#' @param all_one_file This flag allows all programs in a directory to be processed
-#'   or only one specific program file.
+#' @param all_one_file This flag controls processing scope:
 #'   \itemize{
 #'     \item \code{'YN'} (Default): Process **All** ADaM files in \code{target_dir} (matching \code{^ad.*\\.[rR]$}).
 #'     \item \code{'NY'}: Process **Only** the single file specified by \code{target_dir}.
 #'   }
-#' @return A **list** where each element corresponds to an ADaM program. Each list element is structured as:
+#' @param adrg Flag to select the output format:
 #'   \itemize{
-#'     \item \code{program}: The name of the R program file.
-#'     \item \code{dataset}: The derived ADaM dataset name.
-#'     \item \code{packages_used}: A nested data frame with columns \code{package} and \code{func_names}.
+#'     \item \code{'Y'} (Default): Returns a **Data Frame** formatted for an Analysis Data Reviewers Guide (ADRG), with all package/function usage consolidated into a single string per program.
+#'     \item \code{'N'}: Returns a **Nested List** structure, where each program's package/function details are stored in a nested data frame for easy programmatic access.
+#'   }
+#' @return The output format depends on the \code{adrg} flag:
+#'   \itemize{
+#'     \item **If \code{adrg = 'Y'} (Data Frame):** Columns are \code{program}, \code{dataset}, and \code{functions} (a single, newline-separated string).
+#'     \item **If \code{adrg = 'N'} (Nested List):** A list where each element has:
+#'        \itemize{
+#'          \item \code{program}: The R program file name.
+#'          \item \code{dataset}: The derived ADaM dataset name.
+#'          \item \code{packages_used}: A nested data frame with columns \code{package} and \code{func_names}.
+#'        }
 #'   }
 #' @importFrom NCmisc list.functions.in.file
-#' @importFrom dplyr select mutate bind_rows group_by ungroup
+#' @importFrom dplyr select mutate bind_rows group_by summarise ungroup
 #' @importFrom stringr str_detect
 #' @importFrom tidyr nest
 #' @importFrom purrr pmap
@@ -32,22 +40,44 @@
 #' \dontrun{
 #' # NOTE: These examples use non-portable file paths and require the files to exist.
 #'
-#' # 1. Process ALL programs in a directory (all_one_file = 'YN')
-#' # Assumes the directory exists and contains R files starting with 'ad'
-#' all_adams <- list_adam_pgms(
-#'   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
-#'   all_one_file = 'YN'
+#' # --- Scenario 1: Process ALL files, Output for ADRG (adrg='Y', default) ---
+#' # Returns a single data frame with collapsed functions per program.
+#' adrg_all_adams_df <- list_adam_pgms(
+#'   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+#'   all_one_file = 'YN',
+#'   adrg = 'Y'
 #' )
+#' print(adrg_all_adams_df)
 #'
-#' # 2. Process ONLY one specified program (all_one_file = 'NY')
-#' # Assumes the specific file exists
-#' one_adam <- list_adam_pgms(
-#'   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
-#'   all_one_file = 'NY'
+#' # --- Scenario 2: Process ALL files, Output as Nested List (adrg='N') ---
+#' # Returns a list where each program's details are nested. Ideal for programmatic access.
+#' all_adams_list <- list_adam_pgms(
+#'   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+#'   all_one_file = 'YN',
+#'   adrg = 'N'
 #' )
-#' print(one_adam)
+#' # Accessing the nested packages_used data frame for the first program:
+#' all_adams_list[[1]]$packages_used
+#'
+#' # --- Scenario 3: Process ONE file, Output for ADRG (adrg='Y', default) ---
+#' # Returns a data frame with one row, formatted for the ADRG.
+#' adrg_one_adam_df <- list_adam_pgms(
+#'    target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+#'    all_one_file = 'NY',
+#'    adrg = 'Y'
+#' )
+#' print(adrg_one_adam_df)
+#'
+#' # --- Scenario 4: Process ONE file, Output as Nested List (adrg='N') ---
+#' # Returns a list with one element (the specified program's details).
+#' one_adam_list <- list_adam_pgms(
+#'   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+#'   all_one_file = 'NY',
+#'   adrg = 'N'
+#' )
+#' print(one_adam_list)
 #' }
-list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
+list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN', adrg = 'Y') {
 
   # ======================================================================
   # 0. Input and Argument Validation
@@ -56,6 +86,10 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
   # Validate all_one_file flag
   if (!(all_one_file %in% c('YN', 'NY'))) {
     stop("Error: 'all_one_file' must be either 'YN' or 'NY'.")
+  }
+  # Validate adrg flag
+  if (!(adrg %in% c('Y', 'N'))) {
+    stop("Error: 'adrg' must be either 'Y' or 'N'.")
   }
 
   if (all_one_file == 'YN') {
@@ -72,8 +106,8 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
     )
     if (length(r_files) == 0) {
       warning(paste0("Warning: No ADaM R programs found matching pattern '^ad.*\\.[rR]$' in: ", target_dir))
-      # Return an empty dataframe instead of stopping
-      return(data.frame(program = character(0), dataset = character(0), functions = character(0)))
+      # Return empty list or dataframe based on adrg flag
+      return(if (adrg == 'Y') data.frame(program = character(0), dataset = character(0), functions = character(0)) else list())
     }
   } else if (all_one_file == 'NY') {
     # Check if single file exists for 'NY' mode
@@ -95,7 +129,7 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
   all_file_results <- list()
 
   # ======================================================================
-  # 1. Function to process a single file
+  # 1. Function to process a single file (No change)
   # ======================================================================
 
   process_r_file <- function(file_path) {
@@ -111,7 +145,7 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
     )
     if (is.null(code)) return(NULL)
 
-    # ... (Rest of your existing logic for matching library(), require(), and loading packages)
+    # ... (Existing logic for matching library(), require(), and loading packages)
     lib_pattern <- '(library|require)\\s*\\(\\s*["\']?([^"\'\\)\\s]+)["\']?\\s*\\)'
     matches <- regmatches(code, gregexpr(lib_pattern, code))
     pkgs <- unique(unlist(lapply(matches, function(m) {
@@ -133,7 +167,7 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
     )
     if (is.null(func_list)) return(NULL)
 
-    # ... (Rest of your existing logic for processing and cleaning func_list into result_df)
+    # ... (Existing logic for processing and cleaning func_list into result_df)
     df_list <- list()
     for (name in names(func_list)) {
       funcs <- func_list[[name]]
@@ -175,7 +209,7 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
   }
 
   # ======================================================================
-  # 2. Iterate over all files and combine results
+  # 2. Iterate over all files and combine results (No change)
   # ======================================================================
 
   for (file in r_files) {
@@ -194,78 +228,50 @@ list_adam_pgms <- function(target_dir = ".", all_one_file = 'YN') {
 
   results_df <- bind_rows(all_file_results)
 
-  # # Check if results_df is empty before piping
-  # if (nrow(results_df) == 0 && length(r_files) > 0) {
-  #   warning("No function usage found in any processed files.")
-  #   return(data.frame(program = character(0), dataset = character(0), functions = character(0)))
-  # } else if (nrow(results_df) == 0) {
-  #   return(data.frame(program = character(0), dataset = character(0), functions = character(0)))
-  # }
-  #
-  # results_df <- results_df %>% mutate(functions = paste0(package,": ",func_names))
-  # results_df$dataset <- gsub("\\.[rR]$", ".xpt", results_df$program)
-  #
-  # # reorder columns
-  # list_adams <- results_df %>%
-  #   select(program, dataset, functions)
-  #
-  # # setting all functions in one cell
-  # adrg_adams <- list_adams %>%
-  #   group_by(program, dataset) %>%
-  #   summarise(
-  #     functions = paste(functions, collapse = "\n\n"), # Renaming 'all_functions' back to 'functions'
-  #     .groups = 'drop'
-  #   )
-  #
-  # return((list_adams)) # Simplified return to a clean data frame
-
-
-  # # Check if results_df is empty before piping
-  # if (nrow(results_df) == 0 && length(r_files) > 0) {
-  #   warning("No function usage found in any processed files.")
-  #   return(list()) # Return an empty list for consistency
-  # } else if (nrow(results_df) == 0) {
-  #   return(list()) # Return an empty list for consistency
-  # }
-  #
-  # # 1. Combine the package and functions into a string and Derive dataset name
-  # results_df <- results_df %>% mutate(functions = paste0(package,": ",func_names))
-  # results_df$dataset <- gsub("\\.[rR]$", ".xpt", results_df$program)
-  #
-  # # 2. Group by program/dataset/functions and NEST the package:function details
-  # nested_data <- results_df %>%
-  #   select(program, dataset, functions) %>%
-  #   group_by(program, dataset) %>%
-  #   # The functions column become a nested vector frame in the 'packages_used' column
-  #   tidyr::nest(packages_used = c(functions)) %>%
-  #   ungroup()
-  #
-  # # 3. Convert the nested data frame into a list of lists (one element per program)
-  # final_list <- purrr::pmap(nested_data, list)
-  #
-  # return(final_list)
-
   # Check if results_df is empty before piping
   if (nrow(results_df) == 0 && length(r_files) > 0) {
     warning("No function usage found in any processed files.")
-    return(list()) # Return an empty list for consistency
+    return(if (adrg == 'Y') data.frame(program = character(0), dataset = character(0), functions = character(0)) else list())
   } else if (nrow(results_df) == 0) {
-    return(list()) # Return an empty list for consistency
+    return(if (adrg == 'Y') data.frame(program = character(0), dataset = character(0), functions = character(0)) else list())
   }
 
-  # 1. Derive dataset name
+  # Derive dataset name (needed for both output types)
   results_df$dataset <- gsub("\\.[rR]$", ".xpt", results_df$program)
 
-  # 2. Group by program/dataset and NEST the package/function details
-  nested_data <- results_df %>%
-    select(program, dataset, package, func_names) %>%
-    group_by(program, dataset) %>%
-    # The package and func_names columns become a nested data frame in the 'packages_used' column
-    tidyr::nest(packages_used = c(package, func_names)) %>%
-    ungroup()
+  if (adrg == 'N') {
+    # Output Type: Nested List (for programmatic access)
+    # 1. Group by program/dataset and NEST the package/function details
+    nested_data <- results_df %>%
+      select(program, dataset, package, func_names) %>%
+      group_by(program, dataset) %>%
+      tidyr::nest(packages_used = c(package, func_names)) %>%
+      ungroup()
 
-  # 3. Convert the nested data frame into a list of lists (one element per program)
-  final_list <- purrr::pmap(nested_data, list)
+    # 2. Convert the nested data frame into a list of lists (one element per program)
+    final_list <- purrr::pmap(nested_data, list)
 
-  return(final_list)
+    # 3. return final_list with list of package and functions
+    return(final_list)
+
+  } else if (adrg == 'Y') {
+    # Output Type: Data Frame (for ADRG documentation)
+    # 1. Combine package and functions into a single string
+    results_df <- results_df %>% mutate(functions = paste0(package,": ",func_names))
+
+    # 2. Reorder columns
+    list_adams <- results_df %>%
+      select(program, dataset, functions)
+
+    # 3. Collapse all function strings into one cell per program
+    adrg_adams <- list_adams %>%
+      group_by(program, dataset) %>%
+      summarise(
+        functions = paste(functions, collapse = "\n\n"),
+        .groups = 'drop'
+      )
+
+    # 4. return table needed for the ADRG
+    return(adrg_adams)
+  }
 }

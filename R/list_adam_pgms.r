@@ -12,7 +12,7 @@
 #' @param all_one_file This flag controls processing scope:
 #'   \itemize{
 #'     \item \code{'YN'} (Default): Process **All** ADaM files in \code{target_dir} (matching \code{^ad.*\\.[rR]$}).
-#'     \item \code{'NY'}: Process **Only** the single file specified by \code{target_dir}.
+#'     \item \code{'NY'}: Process **Only** the single file specified by \code{target_dir} (matching \code{^ad.*\\.[rR]$})..
 #'   }
 #' @param adrg Flag to select the output format:
 #'   \itemize{

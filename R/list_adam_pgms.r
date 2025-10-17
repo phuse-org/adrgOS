@@ -24,8 +24,8 @@
 #' @importFrom NCmisc list.functions.in.file
 #' @importFrom dplyr select mutate bind_rows group_by ungroup
 #' @importFrom stringr str_detect
-#' @importFrom tidyr nest # <--- NEW IMPORT
-#' @importFrom purrr pmap # <--- NEW IMPORT for final list creation
+#' @importFrom tidyr nest
+#' @importFrom purrr pmap
 #' @export
 #'
 #' @examples

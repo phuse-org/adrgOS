@@ -15,7 +15,7 @@ list_adam_pgms(target_dir = ".", all_one_file = "YN", adrg = "Y")
 \item{all_one_file}{This flag controls processing scope:
    \itemize{
      \item \code{'YN'} (Default): Process \strong{All} ADaM files in \code{target_dir} (matching \code{^ad.*\\.[rR]$}).
-     \item \code{'NY'}: Process \strong{Only} the single file specified by \code{target_dir}.
+     \item \code{'NY'}: Process \strong{Only} the single file specified by \code{target_dir} (matching \code{^ad.*\\.[rR]$})..
    }}
 
 \item{adrg}{Flag to select the output format:
@@ -49,37 +49,37 @@ It automatically derives the expected ADaM dataset name (\code{.xpt}) from the p
 # --- Scenario 1: Process ALL files, Output for ADRG (adrg='Y', default) ---
 # Returns a single data frame with collapsed functions per program.
 adrg_all_adams_df <- list_adam_pgms(
-   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
-   all_one_file = 'YN',
-   adrg = 'Y'
+  target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+  all_one_file = 'YN',
+  adrg = 'Y'
 )
 print(adrg_all_adams_df)
 
 # --- Scenario 2: Process ALL files, Output as Nested List (adrg='N') ---
 # Returns a list where each program's details are nested. Ideal for programmatic access.
 all_adams_list <- list_adam_pgms(
-   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
-   all_one_file = 'YN',
-   adrg = 'N'
+  target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/",
+  all_one_file = 'YN',
+  adrg = 'N'
 )
 # Accessing the nested packages_used data frame for the first program:
-# all_adams_list[[1]]$packages_used
+all_adams_list[[1]]$packages_used
 
 # --- Scenario 3: Process ONE file, Output for ADRG (adrg='Y', default) ---
 # Returns a data frame with one row, formatted for the ADRG.
 adrg_one_adam_df <- list_adam_pgms(
-   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
-   all_one_file = 'NY',
-   adrg = 'Y'
+   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+   all_one_file = 'NY',
+   adrg = 'Y'
 )
 print(adrg_one_adam_df)
 
 # --- Scenario 4: Process ONE file, Output as Nested List (adrg='N') ---
 # Returns a list with one element (the specified program's details).
 one_adam_list <- list_adam_pgms(
-   target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
-   all_one_file = 'NY',
-   adrg = 'N'
+  target_dir = "./dev/pilot3/m5/datasets/rconsortiumpilot3/analysis/adam/programs/adlbc.r",
+  all_one_file = 'NY',
+  adrg = 'N'
 )
 print(one_adam_list)
 }

@@ -12,7 +12,9 @@ Imports:
     NCmisc,
     renv,
     stringr,
-    xml2
+    xml2,
+    tidyr,
+    purrr
 Suggests: 
     knitr,
     rmarkdown,

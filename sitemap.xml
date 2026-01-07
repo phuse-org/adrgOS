@@ -3,9 +3,16 @@
 <url><loc>https://phuse-org.github.io/adrgOS/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/LICENSE-text.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/LICENSE.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/articles/adsl_common_vars_extractor.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/articles/index.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/authors.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/index.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/news/index.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/reference/extract_common_adsl_variables.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/reference/extract_variable_info_from_define.html</loc></url>
 <url><loc>https://phuse-org.github.io/adrgOS/reference/index.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/reference/list_adam_pgms.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/reference/list_r_packages.html</loc></url>
+<url><loc>https://phuse-org.github.io/adrgOS/reference/print.common_adsl_vars.html</loc></url>
 </urlset>
 

@@ -1,0 +1,14 @@
+# Package index
+
+## All functions
+
+- [`extract_common_adsl_variables()`](https://phuse-org.github.io/adrgOS/reference/extract_common_adsl_variables.md)
+  : Extract Common ADSL Variables Across Analysis Domains
+- [`extract_variable_info_from_define()`](https://phuse-org.github.io/adrgOS/reference/extract_variable_info_from_define.md)
+  : Extract Variable Information from Define.xml
+- [`list_adam_pgms()`](https://phuse-org.github.io/adrgOS/reference/list_adam_pgms.md)
+  : List ADaM Programs, Packages, and Functions
+- [`list_r_packages()`](https://phuse-org.github.io/adrgOS/reference/list_r_packages.md)
+  : List R Packages
+- [`print(`*`<common_adsl_vars>`*`)`](https://phuse-org.github.io/adrgOS/reference/print.common_adsl_vars.md)
+  : Print Method for Common ADSL Variables

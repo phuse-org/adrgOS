@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^adrgOS\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
@@ -8,3 +10,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^adrgOS\.Rcheck$
+^adrgOS.*\.tar\.gz$
+^adrgOS.*\.tgz$
+^doc$
+^Meta$

@@ -2,11 +2,26 @@ Package: adrgOS
 Title: Utility functions for ADRG
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Provide tools to be able to fill in sections into the ADRG file. 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: Provide tools to be able to fill in sections into the ADRG
+    file.
 License: MIT + file LICENSE
+URL: https://phuse-org.github.io/adrgOS/
+Imports: 
+    dplyr,
+    NCmisc,
+    renv,
+    stringr,
+    xml2,
+    tidyr,
+    purrr
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-URL: https://phuse-org.github.io/adrgOS/
+RoxygenNote: 7.3.3

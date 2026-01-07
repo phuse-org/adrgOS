@@ -1,2 +1,7 @@
 .Rproj.user
 docs
+adrgOS.Rcheck/
+adrgOS*.tar.gz
+adrgOS*.tgz
+/doc/
+/Meta/

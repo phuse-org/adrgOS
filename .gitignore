@@ -1,5 +1,6 @@
 .Rproj.user
 docs
+.Rhistory
 adrgOS.Rcheck/
 adrgOS*.tar.gz
 adrgOS*.tgz

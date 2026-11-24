@@ -1,22 +1,19 @@
 ---
 title: "Analysis Data Reviewer’s Guide"
-subtitle: "R Consortium  \nR Submission Pilot 3  \nADRG Template Version 2019-07-18"
-
-# output in PDF
-# format:
-#   pdf:
-#     toc: true
-#     number-sections: true
-#     include-before:
-#       - '`\newpage{}`'
-      
-# output in HTML
+subtitle: "R Consortium  \nR Submission Pilot 3  \nADRG Template Version 2.0 (Public Review Draft, 09 January 2026)"
 format:
   html:
     toc: true
-    html-math-method: katex
     number-sections: true
-
+    embed-resources: true
+  typst:
+    toc: true
+    number-sections: true
+    section-numbering: 1.1.1
+    papersize: us-letter
+    margin:
+      x: 0.6in
+      y: 0.65in
 editor: visual
 ---
 
@@ -27,6 +24,8 @@ editor: visual
 ## Purpose
 
 This document provides context for the analysis datasets and terminology that benefit from additional explanation beyond the Data Definition document (define.xml). In addition, this document provides a summary of ADaM conformance findings.
+
+This completed example applies the R-specific structure in ADRG Template v2.0 and its accompanying completion guideline. Study metadata, analysis results, and QC findings are historical Pilot 3 content. Rendering this document does not execute the analysis programs or independently repeat the historical QC; environment restoration and execution instructions are provided in Appendix I.
 
 ## Study Data Standards and Dictionary Inventory
 
@@ -93,7 +92,7 @@ This was a prospective, randomized, multi-center, double-blind, placebo-controll
 
 ### Study schema:
 
-![](images/cdiscpilot01-study-schema.png){fig-align="center"}
+![](m5/datasets/rconsortiumpilot3/analysis/adam/programs/images/cdiscpilot01-study-schema.png){fig-align="center"}
 
 {{< pagebreak >}}
 
@@ -299,91 +298,44 @@ Was define.xml evaluated?
 
 ## QC Findings and Common Issues
 
-In this Pilot 3 study, our focus was to create a subset of ADaMs based on the CDSICPILOT data, using R. We compared our R generated ADaMs against the CDISCPILOT ADaMs, created in SAS, as a QC step. With these comparisons we listed the QC Findings with explanations as to why these findings exist. We also came across common issues throughout the ADaM generation process, which could be helpful for improvements utilising the CDISC Pilot data in the future. More details can be found in the appendix (Appendix 2 and Appendix 3).
+In this Pilot 3 study, our focus was to create a subset of ADaMs based on the CDISCPILOT data, using R. We compared our R generated ADaMs against the CDISCPILOT ADaMs, created in SAS, as a QC step. With these comparisons we listed the QC Findings with explanations as to why these findings exist. We also came across common issues throughout the ADaM generation process, which could be helpful for improvements utilising the CDISC Pilot data in the future. These historical findings and known differences are retained in Appendix II and Appendix III; they are not results from rendering this document or rerunning the programs on the documentation-build machine.
 
 {{< pagebreak >}}
 
 # Submission of Programs
 
-## Description
+All programs for the analysis datasets and analysis outputs are submitted in R. The historical analysis environment and its documented package-management configuration are summarised below. Fields not recorded in the submitted materials are identified explicitly rather than inferred from the current documentation-build machine.
 
-The sponsor has provided all programs for analysis results. They are all created on a Linux platform using R version 4.2.3.
+| Field | Analysis Environment |
+|---|---|
+| Language | R |
+| Operating System / Platform | Linux; distribution and architecture were not specified in the historical ADRG or lockfile. |
+| Software | R 4.2.3. The analysis IDE was not recorded; RStudio 2023.03.1+446.pro1 is specified only in the historical Windows reconstruction instructions. |
+| Initial Date (Time = 0) for Software | 01 January 1970 |
+| Management Tool (if applicable) | renv 0.17.0 with the Posit Package Manager CRAN snapshot dated 2023-03-15; the submitted snapshot is `renv-lock.txt`. |
 
-## ADaM Programs
+## Analysis Dataset Programs
 
-The following table contains the list of programs that generate the analysis datasets in Pilot 3. It shows the program file name, the analysis dataset name and the label of the analysis dataset. The recommended steps to execute the analysis results using R are described in the Appendix.
+The following inventory was checked against the submitted programs and the analysis datasets in `analysis/adam/datasets`. Package names include both attached packages and packages accessed with `pkg::fun`; individual functions are not listed.
 
-+-----------------------+---------------------------+--------------------------------------+
-| **Program Name**      | **Analysis Dataset Name** | **Analysis Dataset Label**           |
-+=======================+===========================+======================================+
-| adsl.r                | adsl.xpt                  | Subject-Level Analysis Dataset       |
-+-----------------------+---------------------------+--------------------------------------+
-| adadas.r              | adas.xpt                  | ADAS-Cog Analysis                    |
-+-----------------------+---------------------------+--------------------------------------+
-| adlbc.r               | adlb.xpt                  | Analysis Dataset Lab Blood Chemistry |
-+-----------------------+---------------------------+--------------------------------------+
-| adae.r                | adae.xpt                  | Adverse Events Analysis Dataset      |
-+-----------------------+---------------------------+--------------------------------------+
-| adtte.r               | adtte.xpt                 | AE Time to 1st Derm. Event Analysis  |
-+-----------------------+---------------------------+--------------------------------------+
+| Program Name | Output | Macro/Packages Used |
+|---|---|---|
+| adsl.r | adsl.xpt | admiral, dplyr, haven, janitor, metacore, metatools, pilot3utils, tidyr, xportr |
+| adadas.r | adadas.xpt | admiral, dplyr, haven, metacore, metatools, pilot3utils, stringr, tibble, tidyr, xportr |
+| adlbc.r | adlbc.xpt | admiral, dplyr, haven, metacore, metatools, stringr, tidyr, xportr |
+| adae.r | adae.xpt | admiral, dplyr, haven, lubridate, metacore, metatools, stringr, tidyr, xportr |
+| adtte.r | adtte.xpt | admiral, dplyr, haven, metacore, metatools, pilot3utils, tidyr, xportr |
 
 ## Analysis Output Programs
 
-The following table contains a list of programs that generate outputs used in the R consortium R submission Pilot 1. These outputs were rerun in Pilot 3 using the analysis datasets generated by the ADaM programs. It shows the program file names, the related outputs, the input datasets and variables used, and any data selection criteria that need to be applied per Pilot 1.
+The output numbers and titles agree with the Pilot 3 summary report. File names in parentheses are the corresponding files in `analysis/output`; input datasets were checked against the programs.
 
-+-------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Program**       | **Output**                 | **Analysis Datasets & Variables**                                                                                         | **Selection Criteria**                                                                                          |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-| **Name**          | **Name**                   |                                                                                                                           |                                                                                                                 |
-+===================+============================+===========================================================================================================================+=================================================================================================================+
-| tlf-demographic.r | tlf-demographic-pilot3.out | ADSL.STUDYID ADSL.TRT01P ADSL.ITTFL ADSL.AGE ADSL.AGEGR1 ADSL.RACE ADSL.HEIGHTBL ADSL.WEIGHTBL ADSL.BMIBL ADSL.MMSETOT    | STUDYID== "CDISCPILOT01"                                                                                        |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Population: ADSL.ITTFL == "Y"                                                                                   |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Treatment Groups: ADSL.TRT01P Placebo Xanomeline Low Dose Xanomeline High Dose                                  |
-+-------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-| tlf-primary.r     | tlf-primary-pilot3.rtf     | ADSL.TRT01P ADSL.USUBJID ADSL.EFFFL ADSL.ITTFL ADADAS.TRTP                                                                | STUDYID== "CDISCPILOT01"                                                                                        |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            | ADADAS.TRTPCD ADADAS.EFFFL ADADAS.ITTFL ADADAS.PARAMCD ADADAS.ANL01FL ADADAS.AVISIT ADADAS.AVISITN ADADAS.AVAL ADADAS.CHG | Population: ADADAS.EFFFL == "Y" ADADAS.ITTFL == "Y" ADADAS.ANL01FL == "Y"                                       |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | \                                                                                                               |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Treatment Groups: ADSL.TRTP Placebo Xanomeline Low Dose Xanomeline High Dose                                    |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Parameters: ADADAS.PARAMCD == "ACTOT                                                                            |
-+-------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-| \                 | tlf-efficacy-pilot3.rtf    | ADSL.STUDYID ADSL.USUBJID ADSL.ITTFL ADLBC.TRTP ADLBC.TRTPN ADLBC.PARAMCD ADLBC.AVISITN ADLBC.BASE ADLBC.AVAL ADLBC.CHG   | STUDYID== "CDISCPILOT01"                                                                                        |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-| tlf-efficacy.r    |                            |                                                                                                                           | Population: ADSL.ITTFL == "Y" & ADLBC.TRTPN in (0, 81) & ADLBC.PARAMCD == "GLUC" & ADLBC.AVISITN is not missing |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | \                                                                                                               |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Treatment Groups: ADLBC.TRTPN Placebo Xanomeline High Dose                                                      |
-+-------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-| tlf-kmplot.r      | tlf.kmplot-pilot3.pdf      | ADSL.STUDYID ADSL.USUBJID ADSL.SAFFL ADSL.TRT01A ADTTE.STUDYID ADTTE.USUBJID ADTTE.PARAMCD ADTTE.AVAL ADTTE.CNSR          | STUDYID== "CDISCPILOT01"                                                                                        |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Population: ADSL.SAFFL == "Y"                                                                                   |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Treatment Groups: ADSL.TRT01A Placebo Xanomeline Low Dose Xanomeline High Dose                                  |
-|                   |                            |                                                                                                                           |                                                                                                                 |
-|                   |                            |                                                                                                                           | Parameters: ADTTE.PARAMCD == "TTDE"                                                                             |
-+-------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-
-: {tbl-colwidths="\[20,20,30,30\]"}
-
-For reference, below is a description of the analysis programs utilized and outputs generated in Pilot 1.
-
-+-----------------------+-------------------------+-----------------------------------------------------------------------------------+
-| **Program Name**      | **Output Table Number** | **Title**                                                                         |
-+=======================+=========================+===================================================================================+
-| tlf-demographic.r     | Table 14-2.01           | Summary of Demographic and Baseline Characteristics                               |
-+-----------------------+-------------------------+-----------------------------------------------------------------------------------+
-| tlf-primary.r         | Table 14-3.01           | Primary Endpoint Analysis: ADAS Cog (11) - Change from Baseline to Week 24 - LOCF |
-+-----------------------+-------------------------+-----------------------------------------------------------------------------------+
-| tlf-efficacy.r        | Table 14-3.02           | ANCOVA of Change from Baseline at Week 20                                         |
-+-----------------------+-------------------------+-----------------------------------------------------------------------------------+
-| tlf-kmplot.r          | Figure 14-1             | KM plot for Time to First Dermatologic Event: Safety population                   |
-+-----------------------+-------------------------+-----------------------------------------------------------------------------------+
+| Program Name | Output Number | Title | Input Dataset |
+|---|---|---|---|
+| tlf-demographic.r | Table 14-2.01 (`tlf-demographic-pilot3.out`) | Summary of Demographic and Baseline Characteristics | ADSL |
+| tlf-primary.r | Table 14-3.01 (`tlf-primary-pilot3.rtf`) | Primary Endpoint Analysis: ADAS Cog (11) - Change from Baseline to Week 24 - LOCF | ADSL, ADADAS |
+| tlf-efficacy.r | Table 14-3.02 (`tlf-efficacy-pilot3.rtf`) | Primary Endpoint Analysis: Glucose (mmol/L) - Summary at Week 20 - LOCF: ANCOVA of Change from Baseline at Week 20 | ADSL, ADLBC |
+| tlf-kmplot.r | Figure 14-1 (`tlf-kmplot-pilot3.pdf`) | Time to Dermatologic Event by Treatment Group: KM plot for Time to First Dermatologic Event (Safety population) | ADSL, ADTTE |
 
 {{< pagebreak >}}
 
@@ -485,7 +437,7 @@ m5
 
         \|   │   │   ├── tlf-primary.r
 
-        \|   │   │   └── renv.lock
+        \|   │   │   └── renv-lock.txt
 
         \|   │   ├── datasets
 
@@ -509,361 +461,116 @@ m5
 
 {{< pagebreak >}}
 
-# Appendix
-
-## Appendix 1 : Pilot 3 Installation and Usage
-
-To install and execute the R programs, follow all of the procedures below. Ensure that you note the location of where you downloaded the Pilot 3 eCTD submission files. For demonstration purposes, the procedures below assume the transfer has been saved to this location: C:\\pilot3.
-
-In  addition, create  a  new  directory  to  hold  the  unpacked  Pilot  3  ADaM and tlf programs and files. For demonstration purposes, the procedures below assume the new directory is this location: C:\\pilot3-files, where the unpacked files are shown as the m1 and m5 directories.
-
-![](images/clipboard-641727471.png)
-
-### Installation of R and R Studio
-
-Download and install R 4.2.3 for Windows from <https://cran.r-project.org/bin/windows/base/old/4.2.3/>. Then download and run the [R-4.2.3-win.exe](https://cran.r-project.org/bin/windows/base/old/4.2.3/R-4.2.3-win.exe) file. Also download RStudio for Windows by visiting <https://dailies.rstudio.com/version/2023.03.1+446.pro1/>
-
-### Create a new R Studio project within the pilot3-files directory
-
--   Open R Studio
-
--   Select File -\> New Project
-
--   In the Create Project dialog box, choose Existing Directory
-
--   In the Create Project from Existing Directory dialog box, click the Browse button and navigate to the C:\\pilot3-files directory. 
-
--   Once the location has been confirmed, click the Create Project button.
-
--   These .Rproj files will be created.
-
-![](images/clipboard-2366076638.png)
-
-::: callout-note
-It is possible that the `.Rproj.user` folder may not have generated for you or or may not be visible as it is a hidden folder. If so, this is fine as it will not be necessary in order to run the analysis programs below.
-:::
-
-### Installation of R Packages
-
-A minimum set of R packages are required to ensure the Pilot 3 analysis programs are successfully run and the custom package environment used for the application is replicated correctly. Below are the R packages required:
-
-#### Proprietary R Packages
-
-+----------------------------------------------------------------------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **R Package**                                                              | **Package version** | **Package Description**                                                                                                                                                                                                                                                                       |
-+----------------------------------------------------------------------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [pilot3utils](https://github.com/RConsortium/submissions-pilot3-utilities) | 0.0.2               | The objective of this utility package is to support the [R Consortium R submission Pilot 3 Project](https://rconsortium.github.io/submissions-wg/). It contains all utility functions that were used in the generation of the deliverables: formatting of ADaM variables and analysis results |
-|                                                                            |                     |                                                                                                                                                                                                                                                                                               |
-|                                                                            |                     | summarize mixed model analysis                                                                                                                                                                                                                                                                |
-|                                                                            |                     |                                                                                                                                                                                                                                                                                               |
-|                                                                            |                     | formatting of layouts                                                                                                                                                                                                                                                                         |
-+----------------------------------------------------------------------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-: {tbl-colwidths="\[30,30,40\]"}
-
-#### Open-source R Analysis Packages
-
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **R Package** | **Package version** | **Package Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| admiral       | 0.10.1              | A toolbox for programming Clinical Data Interchange Standards Consortium (CDISC) compliant Analysis Data Model (ADaM) datasets in R. ADaM datasets are a mandatory part of any New Drug or Biologics License Application submitted to the United States Food and Drug Administration (FDA). Analysis derivations are implemented in accordance with the "Analysis Data Model Implementation Guide" (CDISC Analysis Data Model Team, 2021, https://www.cdisc.org/standards/              |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | foundational/adam/adamig-v1-3-release-package).                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| cowplot       | 1.1.1               | Provides various features that help with creating publication-quality figures with 'ggplot2', such as a set of themes, functions to align plots and arrange them into complex compound figures, and functions that make it easy to annotate plots and or mix plots with images. The package was originally written for internal use in the Wilke lab, hence the name (Claus O. Wilke's plot package). It has also been used extensively in the book Fundamentals of Data Visualization. |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| diffdf        | 1.0.4               | Functions for comparing two data.frames against each other. The core functionality is to provide a detailed breakdown of any differences between two data.frames as well as providing utility functions to help narrow down the source of problems and differences.                                                                                                                                                                                                                     |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| dplyr         | 1.1.0               | A fast, consistent tool for working with data frame like                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | objects, both in memory and out of memory.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| emmeans       | 1.8.5               | Obtain estimated marginal means (EMMs) for many linear, generalized linear, and mixed models. Compute contrasts or linear functions of EMMs, trends, and comparisons of slopes. Plots and other displays.                                                                                                                                                                                                                                                                               |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | Least-squares means are discussed, and the term "estimated marginal means" is suggested, in Searle, Speed, and Milliken (1980) Population marginal means                                                                                                                                                                                                                                                                                                                                |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | in the linear model: An alternative to least squares means, The American Statistician 34(4), 216-221 \<doi:10.1080/00031305.1980.10483031\>.                                                                                                                                                                                                                                                                                                                                            |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ggplot2       | 3.4.1               | A system for 'declaratively' creating graphics, based on "The Grammar of Graphics". You provide the data, tell 'ggplot2' how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.                                                                                                                                                                                                                                                        |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| haven         | 2.5.2               | Import foreign statistical formats into R via the embedded 'ReadStat' C library, \<https://github.com/WizardMac/ReadStat\>.                                                                                                                                                                                                                                                                                                                                                             |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| lubridate     | 1.9.2               | Functions to work with date-times and time-spans: fast and user friendly parsing of date-time data, extraction and updating of components of a date-time (years, months, days, hours, minutes, and seconds), algebraic manipulation on date-time and time-span objects. The 'lubridate' package has a consistent and memorable  syntax that makes working with dates easy and fun.                                                                                                      |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| metacore      | 0.1.2               | Create an immutable container holding metadata for the purpose of better enabling programming activities and functionality of other packages within the clinical programming workflow.                                                                                                                                                                                                                                                                                                  |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| metatools     | 0.1.5               | Uses the metadata information stored in 'metacore' objects to check and build metadata associated columns.                                                                                                                                                                                                                                                                                                                                                                              |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| pharmaRTF     | 0.1.4               | Enhanced RTF wrapper written in R for use with existing R tables packages such as 'Huxtable' or 'GT'. This package fills a gap where tables in certain packages can be written out to RTF, but cannot add certain metadata                                                                                                                                                                                                                                                              |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | or features to the document that are required/expected in a report for a regulatory submission, such as multiple levels of titles and footnotes, making the document landscape, and controlling properties such as margins.                                                                                                                                                                                                                                                             |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| r2rtf         | 1.0.1               | Create production-ready Rich Text Format (RTF) table and figure with flexible format.                                                                                                                                                                                                                                                                                                                                                                                                   |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| rtables       | 0.6.0               | Reporting tables often have structure that goes beyond simple rectangular data. The 'rtables' package provides a framework for declaring complex multi-level tabulations                                                                                                                                                                                                                                                                                                                |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | and then applying them to data. This framework models both tabulation and the resulting tables as hierarchical, tree-like objects which support sibling sub-tables, arbitrary splitting or grouping of data in row and column dimensions, cells containing multiple values, and the concept of contextual summary computations. A convenient pipe-able interface is provided for declaring table layouts and the corresponding computations, and then applying them to data.            |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| stringr       | 1.5.0               | A consistent, simple and easy to use set of wrappers around the fantastic 'stringi' package. All function and argument names (and positions) are consistent, all functions deal with "NA"'s and zero length vectors in the same way, and the output from one function is easy to feed into the input of another.                                                                                                                                                                        |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| tidyr         | 1.3.0               | Tools to help to create tidy data, where each column is a                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | variable, each row is an observation, and each cell contains a single value. 'tidyr' contains tools for changing the shape (pivoting) and hierarchy (nesting and 'unnesting') of a dataset, turning deeply nested lists into rectangular data frames ('rectangling'), and extracting values out of string columns. It also includes tools for                                                                                                                                           |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | working with missing values (both implicit and explicit).                                                                                                                                                                                                                                                                                                                                                                                                                               |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Tplyr         | 1.1.0               | A traceability focused tool created to simplify the data manipulation necessary to create clinical summaries.                                                                                                                                                                                                                                                                                                                                                                           |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| visR          | 0.3.1               | To enable fit-for-purpose, reusable clinical and medical                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|               |                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|               |                     | research focused visualizations and tables with sensible defaults and based on graphical principles as described in: "Vandemeulebroecke et al. (2018)" \<doi:10.1002/pst.1912\>, "Vandemeulebroecke et al. (2019)" \<doi:10.1002/psp4.12455\>, and "Morris et al. (2019)" \<doi:10.1136/bmjopen-2019-030215\>.                                                                                                                                                                          |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| xportr        | 0.2.0               | Tools to build CDISC compliant data sets and check for CDISC compliance.                                                                                                                                                                                                                                                                                                                                                                                                                |
-+---------------+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-: {tbl-colwidths="\[30,30,40\]"}
-
-Please follow these steps below to install these R packages.
-
-1.  In the `Files` window pane, ensure that this directory
-
-    `~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs`
-
-    has both the `renv-lock.txt` and `pilot3utils_0.0.2.zip` files.
-
-![](images/clipboard-398207727.png)
-
-2.  In the R Studio console install the {remotes} package:
-
-```         
-        install.packages("remotes")
-```
-
-::: callout-note
--   *The console may display a warning message about Rtools being required to build R packages. **However the Rtools utility is not required to run the programs in this pilot 3 study.***
-
--   *If you receive a warning showing "cannot open URL  <https://cran.rstudio.com/src/contrib/PACKAGES>'", this is due to the default R Studio option 'Use secure download method for HTTP'. In R Studio, go to Tools → Global Options → Packages, then uncheck the 'Use secure download method for HTTP' option, then retry installation.*
-:::
-
-3.  Then,  install the {renv} package, version 0.17.0:
-
-```         
-        remotes::install_version("renv", version = "0.17.0")
-```
-
-::: callout-note
-*If not already set, please verify that the working directory is already set to the project folder.*
-
-1.  `getwd()`
-
-2.  If not pointing to root project directory then do : `setwd("~/pilot3-files")`
-:::
-
-4.  Move the 'renv-lock.txt' to the root project directory and rename to 'renv.lock' :
-
-```         
-./pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs/renv-lock.txt 
---> ./pilot3-files/renv.lock
-```
-
-![](images/clipboard-3005280222.png)
-
-![](images/clipboard-2461342323.png)
-
-![](images/clipboard-3313061033.png)
-
-5.  Restart the R Session.
-
-    ![](images/clipboard-1220328888.png)
-
-6.  Run the code below, then select option 1 :
-
-    `renv::init()`
-
-    ![](images/clipboard-2206726057.png)
-
-::: callout-note
--   If using `{renv}` for the first time, you may get a 'Welcome' message describing the renv folder structure and its components. It will also list the packages that will be installed from the `renv.lock` file. At the end it will ask you if you want to proceed. Select 'y'.
-
-`Do you want to proceed? [y/N]: y`
-
--   If after selecting option 1, you may receive a warning such as :
-
-```         
-Warning: error downloading 
-'https://packagemanager.posit.co/cran/2023-03-15/bin/windows/contrib/4.2/
-PACKAGES.rds' 
-['CreateProcess' failed to run 'C:\WINDOWS\SYSTEM32\curl.exe --config 
-"C:\Users\laxamanj\AppData\Local\Temp\RtmpQrN0y7\renv-download-config-
-2e24149c3b5f"']
-```
-
--   If so, then run again selecting option 3 instead :
-
-![](images/clipboard-3523315358.png)
-
--   This warning will show, which can be ignored :
-
-![](images/clipboard-2575842320.png)
-
--   Open the .Rprofile : C:/pilot3-files/.Rprofile and ensure these 2 lines are there :
-
-    ```         
-    Sys.setenv(RENV_DOWNLOAD_FILE_METHOD = "libcurl")
-    source("renv/activate.R")
-    ```
-
-    e.g.,
-
-![](images/clipboard-4064866343.png)
-
--   Restart the R Session (ignoring the warning once more), then run `renv::restore()` and select `y` :
-
-![](images/clipboard-1835977816.png)
-
-![](images/clipboard-3983121962.png)
-
-The package installation procedure may take a few minutes or longer depending on internet bandwidth.
-:::
-
-7.  Upon completion of installing packages using `{renv}`, please restart your R session.
-
-::: callout-note
-After restarting the R session at this stage, running `renv::status()` will show us that the only package uninstalled is the {pilot3utils} package.
-
-```         
-The following package(s) are used in this project, but are not installed:
-
-    pilot3utils
-
-Consider installing these packages (for example, using `renv::install()`).
-Then, use `renv::snapshot()` to record these packages in the lockfile.
-Use `renv::dependencies()` to see where these packages appear to be used.
-```
-
-We may ignore this as we will be installing the {pilot3utils} package in the following steps.
-:::
-
-8.  Install the {pilot3utils} package following the steps below :
-
-    -   In R Studio, navigate to your `Packages` window pane, then click on `Install`.
-
-    ![](images/clipboard-3779894600.png)
-
-    -   A new window called `Install Packages` will show up.
-
-    ![](images/clipboard-695201532.png)
-
-    -   In the field `Install from:`, click on the drop-down menu and select `Package Archive File (.zip; .tar.gz)`
-
-    ![](images/clipboard-1218742851.png)
-
-::: callout-note
-This drop-down option is only available on a local Windows installation, not on linux systems.
-:::
-
--   In the field `Package Archive`, click on `Browse...` and navigate to this directory to point to the `{pilot3utils}` package :
-
-`~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam/programs/pilot3utils_0.0.2.zip`
-
-![](images/clipboard-3031640318.png)
-
--   In the field `Install to Library:`, you may keep this at its default setting.
-
--   Click `Install`.
-
-    ![](images/clipboard-2776928439.png)
-
-9.  **Set the paths to run the analysis programs**
-
-INPUT path: to rerun the analysis programs, define the path variable
-
--   Path for SDTM data: path\$sdtm
-
--   Path to ADaM specifications : path\$adam
-
-OUTPUT path: to save the analysis datasets and  results, define the path variable
-
--   Path for ADaM data: path\$adam
-
--   Path for output TLFs: path\$output. 
-
-All these paths must be defined before executing the analysis programs. You may do so by first entering the full file path directories to where the SDTM is currently stored and where the ADaMs and Outputs will be generated upon execution of the analysis programs.
-
-::: callout-note
-Before executing the example file paths below, first navigate to the `~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis` folder and do this :
-
-1.  Create a copy of the `adam` folder in the same location and rename the new folder copy as `adam-reviewer`. The reason for creating this `adam-reviewer` folder (e.g ../adam-reviewer) is to keep the original ADaM datasets generated by the sponsor (e.g ../adam) so they will not get overwritten upon reviewers' execution of the analysis programs.
-
-![](images/clipboard-2507647878.png)
-
-![](images/clipboard-2575673838.png)
-
-![](images/clipboard-3211797445.png)
-
-2.  In the same location create a new folder called `output` in order to write the outputs in this folder upon reviewers' execution of the analysis output programs.
-
-![](images/clipboard-3715719545.png)
-
-![](images/clipboard-366164445.png)
-
-```         
-# Modify path to the sdtm, adam and output location
-# Output saved in current folder
-
-path <- list(
-  sdtm = "Enter full file path to the sdtm data here",
-  adam = "Enter full file path to where adam data will be written and 
-  sourced here",
-  output = "Enter full file path to where outputs should be saved here"
-  )
-  
-# For example
-
-path <- list(
-  sdtm = "~/pilot3-files/m5/datasets/rconsortiumpilot3/tabulations/sdtm",
-  adam = "~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/
-          adam-reviewer/datasets",
-  output = "~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/output"
-  )
-```
-:::
+# Appendix I: Macros, Functions or Packages Submitted {.unnumbered}
+
+The packages below are referenced by the submitted analysis programs. Versions for repository packages come from the official Pilot 3 `renv-lock.txt`; the `pilot3utils` version comes from its bundled DESCRIPTION. Dependencies are the direct Imports and Depends entries from the DESCRIPTION for each exact version, excluding R and base R packages. The lockfile remains the authoritative inventory for the complete transitive restoration environment.
+
+| Macro/Function/Package Name | Version | Description/Purpose | Dependencies | Proprietary/Open-Source |
+|---|---|---|---|---|
+| admiral | 0.10.1 | ADaM derivations and analysis dataset programming. | admiraldev, dplyr, hms, lifecycle, lubridate, magrittr, purrr, rlang, stringr, tidyr, tidyselect | Open-Source (Apache >= 2) |
+| cowplot | 1.1.1 | Composition and annotation of the Kaplan-Meier figure. | ggplot2, gtable, rlang, scales | Open-Source (GPL-2) |
+| dplyr | 1.1.0 | Data manipulation, joining, grouping, and summarisation. | cli, generics, glue, lifecycle, magrittr, pillar, R6, rlang, tibble, tidyselect, vctrs | Open-Source (MIT) |
+| emmeans | 1.8.5 | Estimated marginal means and contrasts for efficacy analysis. | estimability, numDeriv, mvtnorm | Open-Source (GPL-2 or GPL-3) |
+| ggplot2 | 3.4.1 | Plot construction for the Kaplan-Meier figure. | cli, glue, gtable, isoband, lifecycle, MASS, mgcv, rlang, scales, tibble, vctrs, withr | Open-Source (MIT) |
+| haven | 2.5.2 | Read SAS XPT source and analysis datasets. | cli, forcats, hms, lifecycle, readr, rlang, tibble, tidyselect, vctrs | Open-Source (MIT) |
+| huxtable | 5.5.2 | Format the primary efficacy table for RTF output. | assertthat, commonmark, fansi, generics, glue, htmltools, memoise, R6, rlang, stringi, stringr, tidyselect, xml2 | Open-Source (MIT) |
+| janitor | 2.2.0 | Data cleaning support in ADSL creation. | dplyr, hms, lifecycle, lubridate, magrittr, purrr, rlang, stringi, stringr, snakecase, tidyselect, tidyr | Open-Source (MIT) |
+| knitr | 1.42 | Chunk option support in analysis output programs. | evaluate, highr, yaml, xfun | Open-Source (GPL) |
+| lubridate | 1.9.2 | Date and time handling in ADAE derivations. | generics, timechange | Open-Source (GPL >= 2) |
+| metacore | 0.1.2 | Read and manage ADaM specification metadata. | R6, tidyr, dplyr, stringr, magrittr, xml2, purrr, readxl, rlang, tibble, tidyselect | Open-Source (MIT) |
+| metatools | 0.1.5 | Apply specification-driven dataset checks and metadata. | dplyr, metacore, purrr, rlang, stringr, tidyr, tibble, magrittr | Open-Source (MIT) |
+| pharmaRTF | 0.1.4 | Create titled RTF output for the primary efficacy analysis. | assertthat, stringr, purrr, huxtable | Open-Source (MIT) |
+| pilot3utils | 0.0.2 | Pilot-specific formatting, efficacy models, and table utilities. | dplyr, emmeans, glue, stringr, tibble, tidyr | Proprietary (guideline category); see note below |
+| r2rtf | 1.0.1 | Encode and write efficacy tables in RTF format. | None beyond base R | Open-Source (GPL-3) |
+| rtables | 0.6.0 | Build the demographic and baseline summary table. | htmltools, magrittr, formatters | Open-Source (Apache-2.0) |
+| stringr | 1.5.0 | String manipulation in dataset and output programs. | cli, glue, lifecycle, magrittr, rlang, stringi, vctrs | Open-Source (MIT) |
+| tibble | 3.2.0 | Create parameter and visit lookup tibbles. | fansi, lifecycle, magrittr, pillar, pkgconfig, rlang, vctrs | Open-Source (MIT) |
+| tidyr | 1.3.0 | Reshape and tidy analysis datasets. | cli, dplyr, glue, lifecycle, magrittr, purrr, rlang, stringr, tibble, tidyselect, vctrs | Open-Source (MIT) |
+| Tplyr | 1.1.0 | Build the primary efficacy summary table. | rlang, assertthat, magrittr, dplyr, purrr, stringr, tidyr, tidyselect, tibble, lifecycle, forcats | Open-Source (MIT) |
+| visR | 0.3.1 | Estimate and display the Kaplan-Meier analysis. | broom, cowplot, dplyr, ggplot2, gridExtra, gtable, kableExtra, rlang, survival, tidyr | Open-Source (MIT) |
+| xportr | 0.2.0 | Apply XPT metadata and write ADaM datasets. | dplyr, purrr, stringr, magrittr, glue, rlang, cli, tidyselect, readr, janitor, tm, haven | Open-Source (MIT) |
+
+: {tbl-colwidths="\[16,9,28,32,15\]"}
+
+The Proprietary/Open-Source column follows the accompanying R completion guideline, which explicitly classifies `pilot3utils` as Proprietary to identify sponsor-developed code requiring additional validation documentation. This is the guideline's review category, not a statement that the source has a proprietary licence: `pilot3utils` 0.0.2 is publicly available under GPL (>= 3). Its source is available in the [official Pilot 3 utilities repository](https://github.com/RConsortium/submissions-pilot3-utilities/tree/v0.0.2). A package-specific qualification or validation report was not identified in the materials reviewed for this example; the working group should confirm the appropriate supporting reference before treating the example as submission-ready.
+
+`diffdf` is not included in this inventory because it occurs only in the historical QC narrative, not in the nine submitted analysis programs. `libraries.r` is an unused aggregate file and is not sourced by those programs. Static extraction covered `library()`, `require()`, and `pkg::fun` calls, followed by manual review; no `source()` calls occur in the submitted programs. Dynamic package loading, if introduced in future versions, would require additional review.
+
+## Environment Reconstruction and Program Execution {.unnumbered}
+
+The authoritative package snapshot is available in the [official Pilot 3 submission repository](https://github.com/RConsortium/submissions-pilot3-adam-to-fda/blob/main/m5/datasets/rconsortiumpilot3/analysis/adam/programs/renv-lock.txt). It records R 4.2.3, 122 repository packages, renv 0.17.0, and the CRAN snapshot `https://packagemanager.posit.co/cran/2023-03-15`. The separately bundled `pilot3utils_0.0.2.zip` is a Windows binary built with R 4.2.3.
+
+Restoring packages does not by itself demonstrate analysis reproducibility. Use a new reviewer directory and never overwrite the submitted ADaM datasets or outputs.
+
+1. Install R 4.2.3 from the appropriate [CRAN old-release directory](https://cran.r-project.org/bin/). RStudio is optional and is not required by the command-line procedure. Platform-specific compilation tools may be needed when binaries are unavailable.
+2. Create an empty reviewer project. Copy the submitted `renv-lock.txt` to `renv.lock` in that project root; retain the original file unchanged in the submission layout. From the project root, run:
+
+   ```r
+   install.packages("renv", repos = "https://packagemanager.posit.co/cran/2023-03-15")
+   stopifnot(utils::packageVersion("renv") == "0.17.0")
+   renv::restore(lockfile = "renv.lock", prompt = FALSE)
+   ```
+
+   Use `renv::restore()`, not `renv::init()`, so that the historical lockfile is not replaced by a new snapshot. Investigate installation errors and warnings in the restoration log rather than ignoring them.
+
+3. Install `pilot3utils` 0.0.2. On Windows, use the bundled binary:
+
+   ```r
+   install.packages(
+     "m5/datasets/rconsortiumpilot3/analysis/adam/programs/pilot3utils_0.0.2.zip",
+     repos = NULL,
+     type = "win.binary"
+   )
+   ```
+
+   The bundled ZIP cannot be installed as a binary on other operating systems. As a source-based alternative, install the official tagged release and confirm its version:
+
+   ```r
+   renv::install("RConsortium/submissions-pilot3-utilities@v0.0.2")
+   stopifnot(utils::packageVersion("pilot3utils") == "0.0.2")
+   ```
+
+   This alternative uses the same package version but is not claimed to be byte-identical to the bundled Windows binary.
+
+4. Create separate `reviewer-run/programs`, `reviewer-run/datasets`, and `reviewer-run/output` directories. Copy the nine analysis programs and `adam-pilot-3.xlsx` into the corresponding reviewer directories. Define paths with absolute paths appropriate to the local machine:
+
+   ```r
+   path <- list(
+     sdtm = "/absolute/path/to/m5/datasets/rconsortiumpilot3/tabulations/sdtm",
+     adam = "/absolute/path/to/reviewer-run/datasets",
+     output = "/absolute/path/to/reviewer-run/output"
+   )
+   ```
+
+5. From `reviewer-run/programs`, execute the programs in dependency order:
+
+   ```r
+   source("adsl.r")
+   source("adae.r")
+   source("adadas.r")
+   source("adlbc.r")
+   source("adtte.r")
+   source("tlf-demographic.r")
+   source("tlf-efficacy.r")
+   source("tlf-kmplot.r")
+   source("tlf-primary.r")
+   ```
+
+6. Record `sessionInfo()` and restoration diagnostics. Compare the regenerated XPT, OUT, RTF, and PDF files with the submitted files using dataset-aware and format-aware comparisons. Differences in timestamps, paths, fonts, or binary serialization should be distinguished from differences in analysis values.
+
+To rebuild this editable ADRG from the `adrgOS` repository root, install Quarto 1.11.9 and run `quarto render dev/pilot3/adrg.qmd`. The HTML and Typst PDF outputs are documentation products only; this command does not execute the analysis programs or repeat the historical QC.
 
 {{< pagebreak >}}
 
-10. **Execute analysis program**
+# Appendix II: QC Findings {.unnumbered}
 
-To reproduce analysis results, rerun the following programs in the order below from `~/pilot3-files/m5/datasets/rconsortiumpilot3/analysis/adam-reviewer/programs` :
-
--   "adsl.r"
-
--   "adae.r"
-
--   "adadas.r"
-
--   "adlbc.r"
-
--   "adtte.r"
-
--   "tlf-demographic.r"
-
--   "tlf-efficacy.r"
-
--   "tlf-kmplot.r"
-
--   "tlf-primary.r"
-
-{{< pagebreak >}}
-
-## Appendix 2 : QC Findings
-
-### ADSL
+## ADSL {.unnumbered}
 
 The R-generated ADSL matches the original ADSL from [CDISC pilot data](https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM), besides the following mismatches:
 
 -   Subject 01-702-1082 has a missing value for BMIBLGR1 in the R-generated ADSL, whilst BMIBLGR1 = "\<25" in the original ADSL. This is an issue with the original ADSL, as this subject's BMI at baseline (BMIBL) is missing and therefore the subject shouldn't be assigned a BMI at baseline group.
 
-### ADAE
+## ADAE {.unnumbered}
 
 The R-generated ADAE matches the original ADAE from [CDISC pilot data](https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM), besides the following mismatches: There is an issue with the original CDISC pilot dataset. ADURN is blank, where AESEQ is (5, 6, 7, 8) for the original CDISC dataset for Subject below:
 
@@ -983,7 +690,7 @@ First 10 of 718 rows are shown in table below
   -----------------------------------------------------------
 ```
 
-### ADLBC
+## ADLBC {.unnumbered}
 
 The R-generated ADLBC matches the original ADLBC from [CDISC pilot data](https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM), besides the following mismatches:
 
@@ -1007,7 +714,7 @@ All rows are shown in table below
   ----------------------------------
 ```
 
-### ADADAS
+## ADADAS {.unnumbered}
 
 The R-generated ADADAS matches original ADADAS from [CDISC pilot data](https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM), except for the records where `PARAMCD=ACTOT, DTYPE=LOCF`. This is an issue from the CDISC ADADAS.
 
@@ -1167,7 +874,7 @@ In the CDISC ADADAS, there are 19 subjects whose records have the incorrect `DTY
 19 01-718-1250     1
 ```
 
-### ADTTE
+## ADTTE {.unnumbered}
 
 The R-generated ADTTE matches original ADTTE from [CDISC pilot data](https://github.com/phuse-org/TestDataFactory/tree/main/Updated/TDF_ADaM) except for minor SAS format discrepancies. Since this adtte was generated in R compared to SAS formats, the columns Type & Length in the define should be sufficient enough to describe the attributes of these variables.
 
@@ -1196,7 +903,7 @@ First 10 of 20 rows are shown in table below
   ------------------------------------------------
 ```
 
-### Label discrepancies
+## Label discrepancies {.unnumbered}
 
 In Pilot3, variable labels were updated per ADaM IG 1.1, which caused some discrepancies with original CDISC pilot data label.
 
@@ -1218,32 +925,32 @@ In Pilot3, variable labels were updated per ADaM IG 1.1, which caused some discr
 
 {{< pagebreak >}}
 
-## Appendix 3 : Common Issues
+# Appendix III: Common Issues {.unnumbered}
 
-### Package issue tracking
+## Package issue tracking {.unnumbered}
 
-#### Package issues
+### Package issues {.unnumbered}
 
 -   `haven::read_xpt()` Some attributes are dropped after using `haven::write_xpt()` `haven::read_xpt()`, e.g., type, length. to do: further check
 
 -   `xportr::xportr_length()` `NA_character_` is considered as length 2 - [issue resolved on Dec 14, 2022](https://github.com/tidyverse/haven/issues/699) to do: to be incorporated in pilot3
 
-#### Potential improvement
+### Potential improvement {.unnumbered}
 
 -   `metatools::build_from_derived()` https://github.com/pharmaverse/metatools/issues/46 Not urgent feature but nice to have - especially when `define.xml` is not in good quality
 
-### Knowledge sharing
+## Knowledge sharing {.unnumbered}
 
 Summary of similarities and differences between packages, to help user identify the best tool that suits the need. Maybe this could go to [Bayer SAS2R catalog](https://bayer-group.github.io/sas2r/) in the future,
 
-#### `metatools` vs `xportr`
+### `metatools` vs `xportr` {.unnumbered}
 
 -   `metatools::set_variable_labels()` vs `xportr::xportr_label()`
 
-#### `xportr` vs `haven`
+### `xportr` vs `haven` {.unnumbered}
 
 -   `xportr::xportr_write()` vs `haven::write_xpt()`
 
-#### `diffdf` vs `arsenal`
+### `diffdf` vs `arsenal` {.unnumbered}
 
 -   `diffdf::diffdf()` vs `arsenal::comparedf()`
